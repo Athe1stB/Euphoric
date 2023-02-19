@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/bg_button_border.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/bg_cirecle_green.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/camera_background.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/camera_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/divider.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/homeCard.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/ic_share.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/light_blue_card.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/list.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/list_card.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/profile.xml" value="0.1785" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/profile_circle_img.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/purple_card.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/redcard.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/aclonica.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/arvo.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/delius_swash_caps.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_liked_songs.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_profile.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/appbar.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/basic_list.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/item_video.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/liked_songs_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/list.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/pausable_progress.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,8 +1,10 @@
-package com.example.euphoric;
+package com.example.euphoric.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.euphoric.R;
 
 public class ContentRecommendationActivity extends AppCompatActivity {
 

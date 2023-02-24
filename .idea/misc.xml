@@ -7,6 +7,7 @@
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/bg_cirecle_green.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/camera_background.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/camera_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/dislike_button.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/divider.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/homeCard.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/ic_share.xml" value="0.1" />
@@ -14,12 +15,15 @@
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/light_lavender_card.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/list.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/list_card.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/play_button.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/play_button_background.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/play_button_foreground.xml" value="0.10666666666666667" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/profile.xml" value="0.1785" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/profile_circle_img.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/purple_card.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/red_card.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/redcard.xml" value="0.1" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/song_list_card.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/drawable/white_card.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/aclonica.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/arvo.xml" value="0.1" />

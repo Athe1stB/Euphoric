@@ -1,4 +1,4 @@
-package com.example.euphoric;
+package com.example.euphoric.view;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,7 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.euphoric.R;
+import com.example.euphoric.models.SongList;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LikedSongsAdapter extends ArrayAdapter<SongList> {
 
@@ -44,13 +48,13 @@ public class LikedSongsAdapter extends ArrayAdapter<SongList> {
         artistText.setText(artist);
 
         TextView albumText = view.findViewById(R.id.song_album);
-        albumText.setText(album);
+        albumText.setText("Album: " + album);
 
         TextView durationText = view.findViewById(R.id.song_duration);
-        durationText.setText(duration);
+        durationText.setText("Duration: " + duration);
 
         TextView genresText = view.findViewById(R.id.song_genres);
-        genresText.setText(genres.toString());
+        genresText.setText("Genres: " + Arrays.toString(genres));
 
         return view;
     }

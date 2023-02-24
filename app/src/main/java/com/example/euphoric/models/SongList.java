@@ -1,11 +1,11 @@
-package com.example.euphoric;
+package com.example.euphoric.models;
 
 public class SongList {
-    String mSongName;
-    String[] mSongGenres;
-    String mArtist;
-    String mDuration;
-    String mAlbum;
+    public String mSongName;
+    public String[] mSongGenres;
+    public String mArtist;
+    public String mDuration;
+    public String mAlbum;
 
     public SongList(String mSongName, String[] mSongGenres, String mArtist, String mDuration, String mAlbum) {
         this.mSongName = mSongName;

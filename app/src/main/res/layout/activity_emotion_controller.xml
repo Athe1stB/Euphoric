@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".EmotionControllerActivity">
+    tools:context=".view.EmotionControllerActivity">
 
     <LinearLayout
         android:layout_margin="8dp"

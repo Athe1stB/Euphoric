@@ -1,9 +1,12 @@
-package com.example.euphoric;
+package com.example.euphoric.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ListView;
+
+import com.example.euphoric.R;
+import com.example.euphoric.models.SongList;
 
 import java.util.ArrayList;
 

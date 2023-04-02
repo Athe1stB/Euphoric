@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "51859061469",
+    "project_id": "euphoric-8718a",
+    "storage_bucket": "euphoric-8718a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51859061469:android:db21eb39341783a9507934",
+        "android_client_info": {
+          "package_name": "com.example.euphoric"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51859061469-1pm2a4aj9c2d587cl3nqeo25tebuukao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOqN06rNUh7rSxmLEYxCdnfarJdiqK09o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51859061469-1pm2a4aj9c2d587cl3nqeo25tebuukao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

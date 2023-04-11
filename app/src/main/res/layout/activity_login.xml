@@ -9,7 +9,7 @@
     tools:context=".view.EmotionControllerActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signup_email"
+        android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -18,7 +18,7 @@
         app:backgroundTint="@color/lavender"
         />
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signup_password"
+        android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -27,15 +27,15 @@
         app:backgroundTint="@color/lavender"
         />
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SignUp">SignUp</Button>
 
     <Button
-        android:id="@+id/redirectLoginButton"
+        android:id="@+id/redirectToSignUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Have an account? Log in"></Button>
+        android:text="Dont have an account? Create one">SignUp</Button>
 
 </LinearLayout>

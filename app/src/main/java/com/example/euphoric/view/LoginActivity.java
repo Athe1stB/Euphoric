@@ -23,9 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.concurrent.Executor;
-
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class Login extends AppCompatActivity {
 
         redirectToSignUp.setOnClickListener(v->{
             redirectToSignUp.startAnimation(myAnim);
-            startActivity(new Intent(getApplicationContext(), SignUp.class));
+            startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -58,17 +56,17 @@ public class Login extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                        startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                         Log.d(TAG, "successfully created user");
                                     }
                                     else{
-                                        Toast.makeText(Login.this, "Cannot log in", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "Cannot log in", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
                 else
-                    Toast.makeText(Login.this, "Fields empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Fields empty", Toast.LENGTH_SHORT).show();
             }
         });
     }

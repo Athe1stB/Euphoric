@@ -15,7 +15,7 @@ import com.example.euphoric.R;
 import com.example.euphoric.services.MyBounceInterpolator;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Dashboard extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 signOutButton.startAnimation(myAnim);
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
     }

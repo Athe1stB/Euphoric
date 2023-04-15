@@ -1,4 +1,5 @@
 *.iml
+*.csv
 .gradle
 /local.properties
 /.idea/caches
@@ -14,4 +15,3 @@
 .cxx
 local.properties
 .secrets
-*.csv

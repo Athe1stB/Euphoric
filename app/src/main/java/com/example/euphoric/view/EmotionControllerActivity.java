@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,8 +29,10 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Objects;
@@ -58,8 +61,12 @@ public class EmotionControllerActivity extends AppCompatActivity {
                         String uuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                         StorageReference imageRef = storageRef.child("images/"+ uuid + ".jpg");
                         try {
-                            InputStream stream = getContentResolver().openInputStream(uri);
-                            UploadTask uploadTask = imageRef.putStream(stream);
+                            Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                            byte[] data = baos.toByteArray();
+                            //uploading the image
+                            UploadTask uploadTask = imageRef.putBytes(data);
                             uploadTask.addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
@@ -74,7 +81,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                                 }
                             });
 
-                        } catch (FileNotFoundException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }

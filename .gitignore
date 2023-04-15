@@ -14,3 +14,4 @@
 .cxx
 local.properties
 .secrets
+/app/src/main/python/data

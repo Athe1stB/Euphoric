@@ -2,6 +2,7 @@ package com.example.euphoric.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -9,6 +10,7 @@ import com.example.euphoric.R;
 import com.example.euphoric.models.SongList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LikedSongsActivity extends AppCompatActivity {
 
@@ -17,6 +19,9 @@ public class LikedSongsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_list);
 
+        Intent i = getIntent();
+        List<Integer> songIds = (List<Integer>) i.getExtras().get("SONG_IDS");
+        // get songs details using ids.
         ArrayList<SongList> songListView= new ArrayList<SongList>();
         String[] gList = {"asdf", "sadf"};
         songListView.add(new SongList("Song 1", gList, "Arijit", "2mins", "AlbumName1"));

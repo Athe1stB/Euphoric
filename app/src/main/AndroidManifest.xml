@@ -29,10 +29,10 @@
             </meta-data>
         </provider>
         <activity
-            android:name=".view.Login"
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SignUp"
+            android:name=".view.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".view.EmotionControllerActivity"
@@ -47,7 +47,7 @@
             android:name=".view.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".view.Dashboard"
+            android:name=".view.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

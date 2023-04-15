@@ -16,11 +16,22 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.euphoric.R;
+import com.example.euphoric.models.User;
+import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class SignUp extends AppCompatActivity {
 
@@ -49,18 +60,21 @@ public class SignUp extends AppCompatActivity {
             signUpButton.startAnimation(myAnim);
             if(email!=null && password!=null) {
                 mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                                    Log.d(TAG, "successfully created user");
-                                }
-                                else{
-                                    Toast.makeText(SignUp.this, "Cannot create User", Toast.LENGTH_SHORT).show();
-                                }
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                List<Integer> songIds = Collections.singletonList((1));
+                                User user = new User(12, "Biswa", songIds);
+                                FirestoreService.set(user, "Users", email.toString());
+                                startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                Log.d(TAG, "successfully created user");
                             }
-                        });
+                            else{
+                                Toast.makeText(SignUp.this, "Cannot create User", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
             }
             else
                 Toast.makeText(SignUp.this, "Fields empty", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,33 @@
+package com.example.euphoric.models;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class VideoList {
+    public ArrayList<Video> videoList;
+
+    public VideoList(JsonNode jsonNode) {
+        getVideoList(jsonNode);
+    }
+
+    private void getVideoList(JsonNode jsonNode){
+        Iterator<JsonNode> itr = jsonNode.get("items").elements();
+        JsonNode current = null;
+        while(itr.hasNext()){
+            current = itr.next();
+            videoList.add( new Video(current));
+        }
+    }
+
+    public ArrayList<Video> getVideoList() {
+        return videoList;
+    }
+
+    public void setVideoList(ArrayList<Video> videoList) {
+        this.videoList = videoList;
+    }
+}

@@ -14,6 +14,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.euphoric.R;
@@ -22,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.text.InputType;
 
 import java.util.concurrent.Executor;
 
@@ -38,8 +44,10 @@ public class Login extends AppCompatActivity {
         myAnim.setInterpolator(interpolator);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final Editable email = ((AppCompatEditText)findViewById(R.id.login_email)).getText();
+        final Editable email = ((EditText) findViewById(R.id.login_email)).getText();
         final Editable password = ((AppCompatEditText)findViewById(R.id.login_password)).getText();
+        final TextView forgotPassword = (TextView) findViewById(R.id.forgot_password);
+        final CheckBox show_hide_password = (CheckBox) findViewById(R.id.show_hide_password);
         final Button loginButton = findViewById(R.id.loginButton);
         final Button redirectToSignUp = findViewById(R.id.redirectToSignUpButton);
 

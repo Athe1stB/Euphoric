@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.euphoric.R;
@@ -35,11 +36,13 @@ public class SignUp extends AppCompatActivity {
         myAnim.setInterpolator(interpolator);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final Editable email = ((AppCompatEditText)findViewById(R.id.signup_email)).getText();
-        final Editable password = ((AppCompatEditText)findViewById(R.id.signup_password)).getText();
+        final Editable name = ((AppCompatEditText) findViewById(R.id.fullName)).getText();
+        final Editable email = ((AppCompatEditText)findViewById(R.id.userEmailId)).getText();
+        final Editable phone = ((AppCompatEditText)findViewById(R.id.mobileNumber)).getText();
+        final Editable password = ((AppCompatEditText)findViewById(R.id.password)).getText();
+        final Editable confirmPassword = ((AppCompatEditText)findViewById(R.id.confirmPassword)).getText();
         final Button signUpButton = findViewById(R.id.signUpButton);
         final Button redirectToLogin = findViewById(R.id.redirectLoginButton);
-
         redirectToLogin.setOnClickListener(v->{
             redirectToLogin.startAnimation(myAnim);
             startActivity(new Intent(getApplicationContext(), Login.class));
@@ -47,23 +50,28 @@ public class SignUp extends AppCompatActivity {
 
         signUpButton.setOnClickListener(v -> {
             signUpButton.startAnimation(myAnim);
-            if(email!=null && password!=null) {
-                mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                                    Log.d(TAG, "successfully created user");
+            if(name!=null && phone!=null && email!=null && password!=null && confirmPassword!=null) {
+                if(password.toString().equals(confirmPassword.toString())){
+                    mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                        Log.d(TAG, "successfully created user");
+                                    }
+                                    else{
+                                        Toast.makeText(SignUp.this, "Cannot create User", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                else{
-                                    Toast.makeText(SignUp.this, "Cannot create User", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                            });
+                }
+                else{
+                    Toast.makeText(SignUp.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+                }
             }
             else
-                Toast.makeText(SignUp.this, "Fields empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUp.this, "Fields empty" + password + " " + confirmPassword, Toast.LENGTH_SHORT).show();
         });
     }
 }

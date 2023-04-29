@@ -14,4 +14,6 @@
     <color name="light_blue">#81CCFF</color>
     <color name="cobalt_blue">#0088FF</color>
     <color name="blue">#0149FF</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="button_selectorcolor">#9E9E9E</color>
 </resources>

@@ -40,38 +40,53 @@ public class SignUpActivity extends AppCompatActivity {
         myAnim.setInterpolator(interpolator);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final Editable email = ((AppCompatEditText)findViewById(R.id.signup_email)).getText();
-        final Editable password = ((AppCompatEditText)findViewById(R.id.signup_password)).getText();
+        final Editable name = ((AppCompatEditText) findViewById(R.id.fullName)).getText();
+        final Editable email = ((AppCompatEditText) findViewById(R.id.userEmailId)).getText();
+        final Editable phone = ((AppCompatEditText) findViewById(R.id.mobileNumber)).getText();
+        final Editable password = ((AppCompatEditText) findViewById(R.id.password)).getText();
+        final Editable confirmPassword = ((AppCompatEditText) findViewById(R.id.confirmPassword)).getText();
         final Button signUpButton = findViewById(R.id.signUpButton);
         final Button redirectToLogin = findViewById(R.id.redirectLoginButton);
 
-        redirectToLogin.setOnClickListener(v->{
+        redirectToLogin.setOnClickListener(v -> {
             redirectToLogin.startAnimation(myAnim);
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         });
 
+        String name1 = name.toString().trim();
+        String email1 = email.toString().trim();
+        String phone1 = phone.toString().trim();
+        String password1 = password.toString().trim();
+        String confirmPassword1 = confirmPassword.toString().trim();
+
         signUpButton.setOnClickListener(v -> {
             signUpButton.startAnimation(myAnim);
-            if(email!=null && password!=null) {
+            if (name1.equals("") || name1.length() == 0
+                    || email1.equals("") || email1.length() == 0
+                    || phone1.equals("") || phone1.length() == 0
+                    || password1.equals("") || password1.length() == 0
+                    || confirmPassword1.equals("") || confirmPassword1.length() == 0) {
+
+                Toast.makeText(SignUpActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+            } else if (!(password.toString().equals(confirmPassword.toString()))) {
+                Toast.makeText(SignUpActivity.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+            } else {
                 mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 List<Integer> songIds = Collections.singletonList((1));
                                 User user = new User(12, "Biswa", songIds);
                                 FirestoreService.set(user, "Users", email.toString());
                                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                 Log.d(TAG, "successfully created user");
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(SignUpActivity.this, "Cannot create User", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
             }
-            else
-                Toast.makeText(SignUpActivity.this, "Fields empty", Toast.LENGTH_SHORT).show();
         });
     }
 }

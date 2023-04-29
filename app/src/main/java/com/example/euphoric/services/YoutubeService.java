@@ -3,6 +3,8 @@ package com.example.euphoric.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Objects;
+
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -10,7 +12,7 @@ import okhttp3.Response;
 
 public class YoutubeService {
     private final String urlSuffix = "&type=video&key=AIzaSyAJd9FlE9pWQkoUXn3628Luhml4ZBPSTkU";
-    private final String urlPrefix = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1000&q=";
+    private final String urlPrefix = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=200&q=";
     private final String genre;
     private final String[] filters;
 
@@ -44,11 +46,10 @@ public class YoutubeService {
         Response response = call.execute();
         if(response.code() == 200) {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode actualObj = mapper.readTree(response.body().string());
-            return actualObj;
+            return mapper.readTree(Objects.requireNonNull(response.body()).string());
         }
         else{
-            System.out.println(response.code() + " : " + response.body().string());
+            System.out.println(response.code() + " : " + Objects.requireNonNull(response.body()).string());
             return null;
         }
     }

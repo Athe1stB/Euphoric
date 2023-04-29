@@ -65,7 +65,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if(result){
-                            CameraService.persistImageAndCallApi(getApplicationContext(), uri);
+                            CameraService.persistImageAndCallApi(EmotionControllerActivity.this, uri);
                         }
                         else
                             Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();

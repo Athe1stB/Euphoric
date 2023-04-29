@@ -11,15 +11,16 @@ public class VideoList {
     public ArrayList<Video> videoList;
 
     public VideoList(JsonNode jsonNode) {
+        videoList = new ArrayList<>();
         getVideoList(jsonNode);
     }
 
-    private void getVideoList(JsonNode jsonNode){
+    private void getVideoList(JsonNode jsonNode) {
         Iterator<JsonNode> itr = jsonNode.get("items").elements();
         JsonNode current = null;
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             current = itr.next();
-            videoList.add( new Video(current));
+            this.videoList.add(new Video(current));
         }
     }
 

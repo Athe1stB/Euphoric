@@ -5,6 +5,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 
 import com.example.euphoric.models.Video;
 import com.example.euphoric.models.VideoList;
+import com.example.euphoric.view.ContentRecommendationActivity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -73,7 +75,9 @@ public class CameraService {
                             JsonNode result = youtubeService.suggest();
                             ArrayList<Video> videoList = new VideoList(result).getVideoList();
                             // give to playable list...
-                            System.out.println(videoList.toString());
+                            Intent i = new Intent(context, ContentRecommendationActivity.class);
+                            i.putExtra("VideoList", videoList);
+                            context.startActivity(i);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

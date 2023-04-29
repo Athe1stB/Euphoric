@@ -2,7 +2,9 @@ package com.example.euphoric.models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class Video {
+import java.io.Serializable;
+
+public class Video implements Serializable {
     public String id;
     public String channelId;
     public String title;
@@ -11,15 +13,19 @@ public class Video {
     public String thumbnail;
     public String publishedAt;
 
+    private String getValid(String value){
+        int length = value.length();
+        return value.substring(1,length-1);
+    }
 
     public Video(JsonNode jsonNode){
-        this.id = jsonNode.get("id").get("videoId").toString();
-        this.channelId = jsonNode.get("snippet").get("channelId").toString();
-        this.title = jsonNode.get("snippet").get("title").toString();
-        this.channelTitle = jsonNode.get("snippet").get("channelTitle").toString();
-        this.description = jsonNode.get("snippet").get("description").toString();
-        this.thumbnail = jsonNode.get("snippet").get("thumbnails").get("high").get("url").toString();
-        this.publishedAt = jsonNode.get("snippet").get("publishedAt").toString();
+        this.id = getValid(jsonNode.get("id").get("videoId").toString());
+        this.channelId = getValid(jsonNode.get("snippet").get("channelId").toString());
+        this.title = getValid(jsonNode.get("snippet").get("title").toString());
+        this.channelTitle = getValid(jsonNode.get("snippet").get("channelTitle").toString());
+        this.description = getValid(jsonNode.get("snippet").get("description").toString());
+        this.thumbnail = getValid(jsonNode.get("snippet").get("thumbnails").get("high").get("url").toString());
+        this.publishedAt = getValid(jsonNode.get("snippet").get("publishedAt").toString());
     }
 
     public String getId() {

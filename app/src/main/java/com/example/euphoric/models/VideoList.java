@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class VideoList {
+public class VideoList implements Serializable {
     public ArrayList<Video> videoList;
 
     public VideoList(JsonNode jsonNode) {

@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import com.example.euphoric.models.Video;
 import com.example.euphoric.models.VideoList;
 import com.example.euphoric.view.ContentRecommendationActivity;
+import com.example.euphoric.view.VideoActivity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,7 +76,7 @@ public class CameraService {
                             JsonNode result = youtubeService.suggest();
                             ArrayList<Video> videoList = new VideoList(result).getVideoList();
                             // give to playable list...
-                            Intent i = new Intent(context, ContentRecommendationActivity.class);
+                            Intent i = new Intent(context, VideoActivity.class);
                             i.putExtra("VideoList", videoList);
                             context.startActivity(i);
                         } catch (IOException e) {

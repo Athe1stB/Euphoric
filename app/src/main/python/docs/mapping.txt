@@ -1,0 +1,32 @@
+Negative:
+    Anger       ->  Calm, Chill
+    Contempt    ->  Party, Dance
+    Fear        ->  Calm, Slow
+    Disgust     ->  Energetic, Focus
+    Sadness     ->  Happy
+
+Positive:
+    Happiness   ->  Pop, Happy
+    Surprise    ->  Happy
+
+
+chill
+party
+pop
+workout
+edm / dance
+hiphop
+focus
+country
+rock
+
+
+{
+  "uri_list": [
+    "6I9VzXrHxO9rA9A5euc8Ak"
+  ]
+}
+
+{
+  "url_image": "https://wp.en.aleteia.org/wp-content/uploads/sites/2/2018/09/web3-happy-people-outside-smile-sun-nature-eduardo-dutra-620857-unsplash.jpg?w=620&h=310&crop=1"
+}

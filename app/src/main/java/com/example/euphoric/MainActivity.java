@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.euphoric.view.Dashboard;
-import com.example.euphoric.view.SignUp;
+import com.example.euphoric.view.DashboardActivity;
+import com.example.euphoric.view.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
             if(currentUser != null){
-                startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
             }
             else{
-                startActivity(new Intent(getApplicationContext(), SignUp.class));
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             }
         }, 2000);
 

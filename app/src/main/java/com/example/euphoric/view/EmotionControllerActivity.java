@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.euphoric.R;
+import com.example.euphoric.services.CameraService;
+import com.example.euphoric.services.YoutubeService;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -46,7 +53,8 @@ public class EmotionControllerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_controller);
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         final LinearLayout cameraLL = findViewById(R.id.camera_ll);
         File file = new File(getFilesDir(), "external_files");
         Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
@@ -56,37 +64,13 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 new ActivityResultCallback<Boolean>() {
                     @Override
                     public void onActivityResult(Boolean result) {
-                        FirebaseStorage storage = FirebaseStorage.getInstance();
-                        StorageReference storageRef = storage.getReference();
-                        String uuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-                        StorageReference imageRef = storageRef.child("images/"+ uuid + ".jpg");
-                        try {
-                            Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-                            byte[] data = baos.toByteArray();
-                            //uploading the image
-                            UploadTask uploadTask = imageRef.putBytes(data);
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    Toast.makeText(EmotionControllerActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    StorageMetadata metadata = taskSnapshot.getMetadata();
-                                    Toast.makeText(EmotionControllerActivity.this, "Upload Succeeded", Toast.LENGTH_SHORT).show();
-                                    // do further
-                                }
-                            });
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if(result){
+                            CameraService.persistImageAndCallApi(EmotionControllerActivity.this, uri);
                         }
+                        else
+                            Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();
                     }
                 });
-
         cameraLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

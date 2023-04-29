@@ -5,6 +5,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -18,6 +19,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
+import com.example.euphoric.models.Video;
+import com.example.euphoric.models.VideoList;
+import com.example.euphoric.view.ContentRecommendationActivity;
+import com.example.euphoric.view.VideoActivity;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class CameraService {
@@ -64,6 +71,17 @@ public class CameraService {
                         Uri downloadUri = task.getResult();
                         System.out.println("IMAGE URL "+ downloadUri.toString());
                         // call api from here
+                        YoutubeService youtubeService = new YoutubeService("calm", new String[]{"evergreen", "bollywood"});
+                        try {
+                            JsonNode result = youtubeService.suggest();
+                            ArrayList<Video> videoList = new VideoList(result).getVideoList();
+                            // give to playable list...
+                            Intent i = new Intent(context, VideoActivity.class);
+                            i.putExtra("VideoList", videoList);
+                            context.startActivity(i);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         Toast.makeText(context, "Failed to get Download URI", Toast.LENGTH_SHORT).show();
                     }

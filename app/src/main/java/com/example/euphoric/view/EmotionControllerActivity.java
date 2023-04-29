@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.euphoric.R;
 import com.example.euphoric.services.CameraService;
+import com.example.euphoric.services.YoutubeService;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +53,8 @@ public class EmotionControllerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_controller);
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         final LinearLayout cameraLL = findViewById(R.id.camera_ll);
         File file = new File(getFilesDir(), "external_files");
         Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
@@ -62,7 +65,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if(result){
-                            CameraService.persistImageAndCallApi(getApplicationContext(), uri);
+                            CameraService.persistImageAndCallApi(EmotionControllerActivity.this, uri);
                         }
                         else
                             Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();

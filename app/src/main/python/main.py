@@ -110,15 +110,16 @@ def emotion_based(url_image: URLImage):
         return None
     else:
         obj = emotion_model.analyze(img_path=img, actions=['emotion'])
-        emotion = obj['dominant_emotion']
-        if emotion_mapping[emotion] == 'neutral':
-            tracks_found = random.choices(dic_vals, k=10)
-        else:
-            tracks_found = fetch_tracks(emotion, 10)
-        recommendation_dict = jsonify(tracks_found)
-        recommendation_dict["emotion"] = emotion
-        recommendation_dict["mood"] = emotion_mapping[emotion]
-        return recommendation_dict
+        emotion = obj[0]['dominant_emotion']
+        return emotion_mapping[emotion]
+#         if emotion_mapping[emotion] == 'neutral':
+#             tracks_found = random.choices(dic_vals, k=10)
+#         else:
+#             tracks_found = fetch_tracks(emotion, 10)
+#         recommendation_dict = jsonify(tracks_found)
+#         recommendation_dict["emotion"] = emotion
+#         recommendation_dict["mood"] = emotion_mapping[emotion]
+#         return recommendation_dict
     
     
 @app.post("/recommend2")

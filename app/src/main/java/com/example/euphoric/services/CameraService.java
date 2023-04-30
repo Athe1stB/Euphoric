@@ -6,6 +6,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
+import com.android.volley.RequestQueue;
 import com.example.euphoric.models.Video;
 import com.example.euphoric.models.VideoList;
 import com.example.euphoric.view.ContentRecommendationActivity;
@@ -39,7 +41,7 @@ import java.util.Objects;
 
 public class CameraService {
 
-    public static void persistImageAndCallApi(Context context, Uri uri){
+    public static void persistImageAndCallApi(Context context, Uri uri, Boolean isVideoInput, RequestQueue requestQueue, SharedPreferences sharedPreferences){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         String uuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -61,7 +63,6 @@ public class CameraService {
                     if (!task.isSuccessful()) {
                         throw Objects.requireNonNull(task.getException());
                     }
-                    // Continue with the task to get the download URL
                     return imageRef.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -69,19 +70,7 @@ public class CameraService {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        System.out.println("IMAGE URL "+ downloadUri.toString());
-                        // call api from here
-                        YoutubeService youtubeService = new YoutubeService("calm", new String[]{"evergreen", "bollywood"});
-                        try {
-                            JsonNode result = youtubeService.suggest();
-                            ArrayList<Video> videoList = new VideoList(result).getVideoList();
-                            // give to playable list...
-                            Intent i = new Intent(context, VideoActivity.class);
-                            i.putExtra("VideoList", videoList);
-                            context.startActivity(i);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        new EBOutputService(requestQueue, sharedPreferences).getResponseOutput(isVideoInput, context);
                     } else {
                         Toast.makeText(context, "Failed to get Download URI", Toast.LENGTH_SHORT).show();
                     }

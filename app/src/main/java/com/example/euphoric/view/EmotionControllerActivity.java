@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 
@@ -28,9 +29,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
+import com.example.euphoric.models.Video;
+import com.example.euphoric.models.VideoList;
 import com.example.euphoric.services.CameraService;
+import com.example.euphoric.services.EBOutputService;
 import com.example.euphoric.services.SpotifySearchService;
 import com.example.euphoric.services.YoutubeService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,31 +66,31 @@ public class EmotionControllerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_controller);
 
-        SwitchCompat switchCompat = findViewById(R.id.input_type_switch);
-        Button searchButton = findViewById(R.id.search_on_mood);
-
         requestQueue = Volley.newRequestQueue(this);
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
+
+        SwitchCompat switchCompat = findViewById(R.id.input_type_switch);
+        handleManualSuggestion(switchCompat.isChecked());
+        initialiseCameraActions(switchCompat.isChecked());
+    }
+
+    private void handleManualSuggestion(Boolean isVideoInput){
+        AppCompatEditText moodText = findViewById(R.id.mood_input);
+        Button searchButton = findViewById(R.id.search_on_mood);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(switchCompat.isChecked())
-                {
-
-                }
-                else{
-                    SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
-                    ss.getTracks(() -> {
-                        ArrayList<SpotifySong> songs = ss.getSongs();
-                        Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
-                        i.putExtra("SongList", songs);
-                        startActivity(i);
-                    });
+                if(moodText.getText() == null || moodText.getText().toString().equals(""))
+                    Toast.makeText(getApplicationContext(), "Enter mood/genre", Toast.LENGTH_SHORT).show();
+                else {
+                    new EBOutputService(requestQueue, sharedPreferences).getResponseOutput(isVideoInput, EmotionControllerActivity.this);
                 }
             }
         });
+    }
 
+    private void initialiseCameraActions(Boolean isVideoInput){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         final LinearLayout cameraLL = findViewById(R.id.camera_ll);
@@ -98,7 +103,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if(result){
-                            CameraService.persistImageAndCallApi(EmotionControllerActivity.this, uri);
+                            CameraService.persistImageAndCallApi(EmotionControllerActivity.this, uri, isVideoInput, requestQueue, sharedPreferences);
                         }
                         else
                             Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();
@@ -110,9 +115,5 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 mGetContent.launch(uri);
             }
         });
-    }
-
-    private void cameraActions(){
-
     }
 }

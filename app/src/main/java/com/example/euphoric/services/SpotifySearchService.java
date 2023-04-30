@@ -40,7 +40,16 @@ public class SpotifySearchService {
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {
                             JSONObject object = jsonArray.getJSONObject(n);
-                            SpotifySong song = gson.fromJson(object.toString(), SpotifySong.class);
+                            String songId = object.getString("id");
+                            String songName = object.getString("name");
+                            String songUrl = object.getString("href");
+                            String songArtists = "";
+                            JSONArray artists = object.getJSONArray("artists");
+                            for(int i=0; i<artists.length(); i++){
+                                songArtists+= ((i>0)?", ":"") + object.getString("name");
+                            }
+                            String songAlbum = object.getJSONObject("album").getString("name");
+                            SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);
                             songs.add(song);
                         } catch (JSONException e) {
                             e.printStackTrace();

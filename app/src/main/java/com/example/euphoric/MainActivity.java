@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.models.SpotifyUser;
+import com.example.euphoric.services.SpotifySearchService;
 import com.example.euphoric.services.SpotifyUserService;
 import com.example.euphoric.view.DashboardActivity;
 import com.example.euphoric.view.SignUpActivity;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,10 +47,18 @@ public class MainActivity extends AppCompatActivity {
         authenticateSpotify();
         initializeFirebaseAuth();
 
+        SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
+        ss.getTracks(() -> {
+            ArrayList<SpotifySong> songs = ss.getSongs();
+            for(int i=0; i<songs.size(); i++)
+            {
+                System.out.println(songs.get(i).getId()+ " " + songs.get(i).getName() + " " + songs.get(i).getHref());
+            }
+        });
         requestQueue = Volley.newRequestQueue(this);
     }
 
-    private void initializeFirebaseAuth(){
+    private void initializeFirebaseAuth() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -59,16 +70,14 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    private void authenticateSpotify(){
+    private void authenticateSpotify() {
         // Initialize shared preferences and volley request queue
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(this);
 
         AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(getString(R.string.CLIENT_ID), AuthorizationResponse.Type.TOKEN, getString(R.string.REDIRECT_URI));
-
         builder.setScopes(new String[]{SCOPES});
         AuthorizationRequest request = builder.build();
-
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
@@ -88,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case ERROR:
-                    Toast.makeText(this, "Spotify Auth Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Spotify Auth Error", Toast.LENGTH_SHORT).show();
                     break;
 
                 default:
-                    Toast.makeText(this, "Spotify Auth: Unexpected Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Spotify Auth: Unexpected Error", Toast.LENGTH_SHORT).show();
             }
         }
     }

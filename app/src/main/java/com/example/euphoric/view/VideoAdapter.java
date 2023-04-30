@@ -14,12 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.euphoric.R;
-import com.example.euphoric.models.SongList;
 import com.example.euphoric.models.Video;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class VideoAdapter extends ArrayAdapter<Video> {
 

@@ -2,10 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background = "@color/white"
     android:padding="20dp" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/homescreen_logo" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -13,7 +20,8 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/login"
-        android:textColor="@color/white_greyish"
+        android:fontFamily="@font/arvo"
+        android:textColor="@color/lavender"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -31,8 +39,9 @@
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:fontFamily="@font/arvo"
+        android:textColor="@color/lavender"
+        android:textColorHint="@color/light_lavender"
         android:textSize="16sp" />
 
     <!--    <View-->
@@ -54,8 +63,9 @@
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:fontFamily="@font/arvo"
+        android:textColor="@color/lavender"
+        android:textColorHint="@color/light_lavender"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -71,7 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/show_pwd"
-            android:textColor="@color/white"
+            android:fontFamily="@font/arvo"
+            android:textColor="@color/lavender"
             android:textSize="14sp" />
 
         <TextView
@@ -82,7 +93,8 @@
             android:gravity="end"
             android:padding="5dp"
             android:text="@string/forgot"
-            android:textColor="@color/white"
+            android:fontFamily="@font/arvo"
+            android:textColor="@color/lavender"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -92,9 +104,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@drawable/login_button"
+        android:background="@drawable/home_card"
         android:padding="3dp"
         android:text="@string/login"
+        android:fontFamily="@font/arvo"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold">SignIn</Button>
@@ -104,8 +117,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@drawable/login_button"
+        android:background="@drawable/home_card"
         android:padding="3dp"
+        android:fontFamily="@font/arvo"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"

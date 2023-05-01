@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +27,9 @@ public class DashboardActivity extends AppCompatActivity {
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
         myAnim.setInterpolator(interpolator);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         final LinearLayout emotionControllerView = findViewById(R.id.emotion_controller_view);
         emotionControllerView.setOnClickListener(new View.OnClickListener() {

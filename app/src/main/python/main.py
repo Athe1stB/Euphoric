@@ -111,7 +111,7 @@ def emotion_based(url_image: URLImage):
     else:
         obj = emotion_model.analyze(img_path=img, actions=['emotion'])
         emotion = obj[0]['dominant_emotion']
-        return emotion_mapping[emotion]
+        return emotion
 #         if emotion_mapping[emotion] == 'neutral':
 #             tracks_found = random.choices(dic_vals, k=10)
 #         else:

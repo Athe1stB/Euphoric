@@ -10,9 +10,7 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.models.SpotifyUser;
-import com.example.euphoric.services.SpotifySearchService;
 import com.example.euphoric.services.SpotifyUserService;
 import com.example.euphoric.view.DashboardActivity;
 import com.example.euphoric.view.SignUpActivity;
@@ -21,8 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,14 +43,6 @@ public class MainActivity extends AppCompatActivity {
         authenticateSpotify();
         initializeFirebaseAuth();
 
-        SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
-        ss.getTracks(() -> {
-            ArrayList<SpotifySong> songs = ss.getSongs();
-            for(int i=0; i<songs.size(); i++)
-            {
-                System.out.println(songs.get(i).getId()+ " " + songs.get(i).getName() + " " + songs.get(i).getHref());
-            }
-        });
         requestQueue = Volley.newRequestQueue(this);
     }
 

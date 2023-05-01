@@ -1,60 +1,29 @@
 package com.example.euphoric.view;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.R;
-import com.example.euphoric.models.SpotifySong;
-import com.example.euphoric.models.Video;
-import com.example.euphoric.models.VideoList;
 import com.example.euphoric.services.CameraService;
-import com.example.euphoric.services.EBOutputService;
-import com.example.euphoric.services.SpotifySearchService;
-import com.example.euphoric.services.YoutubeService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.example.euphoric.services.EmotionControllerService;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class EmotionControllerActivity extends AppCompatActivity {
 
@@ -84,7 +53,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 if(moodText.getText() == null || moodText.getText().toString().equals(""))
                     Toast.makeText(getApplicationContext(), "Enter mood/genre", Toast.LENGTH_SHORT).show();
                 else {
-                    new EBOutputService(requestQueue, sharedPreferences).getResponseOutput(isVideoInput, EmotionControllerActivity.this);
+                    new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, EmotionControllerActivity.this, moodText.getText().toString(), new String[]{"bollywood"});
                 }
             }
         });

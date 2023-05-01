@@ -16,19 +16,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class EBOutputService {
+public class EmotionControllerService {
     RequestQueue requestQueue;
     SharedPreferences sharedPreferences;
 
-    public EBOutputService(RequestQueue requestQueue, SharedPreferences sharedPreferences) {
+    public EmotionControllerService(RequestQueue requestQueue, SharedPreferences sharedPreferences) {
         this.requestQueue = requestQueue;
         this.sharedPreferences = sharedPreferences;
     }
 
-
-    public void getResponseOutput(Boolean isVideoInput, Context context){
+    public void controller(Boolean isVideoInput, Context context, String mood, String[] filters){
         if (isVideoInput) {
-            YoutubeService youtubeService = new YoutubeService("calm", new String[]{"evergreen", "bollywood"});
+            YoutubeService youtubeService = new YoutubeService(mood, filters);
             try {
                 JsonNode result = youtubeService.suggest();
                 ArrayList<Video> videoList = new VideoList(result).getVideoList();

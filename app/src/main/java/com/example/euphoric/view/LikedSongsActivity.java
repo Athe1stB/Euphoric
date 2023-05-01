@@ -21,15 +21,6 @@ public class LikedSongsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_list);
 
-//        List<Integer> songIds = (List<Integer>) i.getExtras().get("SONG_IDS");
-        // get songs details using ids.
-//        ArrayList<Song> songView = new ArrayList<Song>();
-//        String[] gList = {"asdf", "sadf"};
-//        songView.add(new Song("Song 1", "hyd", gList, "Arijit", "2mins", "AlbumName1"));
-//        songView.add(new Song("Song 2","hyd", gList, "artist1", "2mins", "AlbumName2"));
-//        songView.add(new Song("Song 3","hyd", gList, "artist2", "2mins", "AlbumName3"));
-//        songView.add(new Song("Song 4","hyd", gList, "artist3", "2mins", "AlbumName4"));
-
         ArrayList<SpotifySong> songs = (ArrayList<SpotifySong>) getIntent().getSerializableExtra("SongList");
 
         ListView listView = (ListView) findViewById(R.id.basic_list);

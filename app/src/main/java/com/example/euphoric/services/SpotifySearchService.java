@@ -21,10 +21,12 @@ public class SpotifySearchService {
     private ArrayList<SpotifySong> songs = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private RequestQueue queue;
+    private String mood;
 
-    public SpotifySearchService(RequestQueue queue, SharedPreferences sharedPreferences) {
+    public SpotifySearchService(RequestQueue queue, SharedPreferences sharedPreferences, String mood) {
         this.sharedPreferences = sharedPreferences;
         this.queue = queue;
+        this.mood = mood;
     }
 
     public ArrayList<SpotifySong> getSongs() {
@@ -32,7 +34,7 @@ public class SpotifySearchService {
     }
 
     public void getTracks(final VolleyCallBack callBack) {
-        String endpoint = "https://api.spotify.com/v1/search?q=bollywood artist:arijit&type=track";
+        String endpoint = "https://api.spotify.com/v1/search?q=" + mood + " artist:arijit&type=track";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     Gson gson = new Gson();

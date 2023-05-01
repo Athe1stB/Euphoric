@@ -64,7 +64,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 //        genresText.setText("Genres: " + Arrays.toString(genres));
 
         Button likeButton = view.findViewById(R.id.song_like_dislike);
-        if (callerType.equals("Dashboard"))
+        if (!callerType.equals("search"))
             likeButton.setText("Dislike");
         else
             likeButton.setText("Like");
@@ -72,7 +72,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callerType.equals("Dashboard")) {
+                if (!callerType.equals("search")) {
                     FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
                     remove(cur);
                     notifyDataSetChanged();

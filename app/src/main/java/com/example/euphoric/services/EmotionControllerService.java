@@ -39,13 +39,14 @@ public class EmotionControllerService {
                 Toast.makeText(context, "YoutubeService: Error", Toast.LENGTH_SHORT).show();
             }
         } else {
-            SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences, mood);
-            ss.getTracks(() -> {
+            SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
+            ss.searchTracks(() -> {
                 ArrayList<SpotifySong> songs = ss.getSongs();
                 Intent i = new Intent(context, LikedSongsActivity.class);
                 i.putExtra("SongList", songs);
+                i.putExtra("caller_type", "search");
                 context.startActivity(i);
-            });
+            }, mood);
         }
     }
 }

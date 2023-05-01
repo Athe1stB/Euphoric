@@ -13,8 +13,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
 import java.util.Map;
 
 public class FirestoreService {
@@ -92,6 +94,19 @@ public class FirestoreService {
                     Log.w(TAG, "Error updating document", e);
                 }
             });
+    }
+
+    public static void addArrayElement(String collectionPath, String documentName, String arrayName, String element){
+        Map<String, Object> ob = get(collectionPath,documentName);
+        if(!((List<String>) ob.get(arrayName)).contains(element)) {
+            db.collection(collectionPath).document(documentName)
+                    .update(arrayName, FieldValue.arrayUnion(element));
+        }
+    }
+
+    public static void deleteArrayElement(String collectionPath, String documentName, String arrayName, String element){
+        db.collection(collectionPath).document(documentName)
+                .update(arrayName, FieldValue.arrayRemove(element));
     }
 
     public static void delete(String collectionPath, String documentName){

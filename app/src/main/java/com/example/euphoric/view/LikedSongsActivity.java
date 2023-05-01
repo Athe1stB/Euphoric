@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.euphoric.R;
-import com.example.euphoric.models.Song;
 import com.example.euphoric.models.SpotifySong;
-import com.example.euphoric.models.Video;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LikedSongsActivity extends AppCompatActivity {
 
@@ -21,10 +18,12 @@ public class LikedSongsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_list);
 
-        ArrayList<SpotifySong> songs = (ArrayList<SpotifySong>) getIntent().getSerializableExtra("SongList");
+        Intent i = getIntent();
+        ArrayList<SpotifySong> songs = (ArrayList<SpotifySong>) i.getSerializableExtra("SongList");
+        String callerType = i.getStringExtra("caller_type");
 
         ListView listView = (ListView) findViewById(R.id.basic_list);
-        final LikedSongsAdapter cAdapter = new LikedSongsAdapter(this, songs);
+        final LikedSongsAdapter cAdapter = new LikedSongsAdapter(this, songs, callerType);
         listView.setAdapter(cAdapter);
     }
 }

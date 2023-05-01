@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                List<Integer> songIds = Collections.singletonList((1));
+                                List<String> songIds = Collections.emptyList();
                                 User user = new User(12, "Biswa", songIds);
                                 FirestoreService.set(user, "Users", email.toString());
                                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));

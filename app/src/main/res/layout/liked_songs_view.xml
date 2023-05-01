@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <Button
+            android:id="@+id/song_play"
             android:layout_width="wrap_content"
             android:layout_height="30sp"
             android:textColor="@color/white"
@@ -26,6 +27,7 @@
             android:text="Play"
             android:textSize="8sp"/>
         <Button
+            android:id="@+id/song_like_dislike"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:textColor="@color/white"

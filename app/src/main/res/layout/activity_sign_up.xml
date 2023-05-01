@@ -8,21 +8,37 @@
     android:background = "@color/white"
     android:padding="20dp" >
 
+
+    <!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20px"-->
+<!--        android:layout_marginBottom="20px"-->
+<!--        android:drawableLeft="@drawable/homescreen_logo_only1"-->
+<!--        android:fontFamily="@font/arvo"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="10dp"-->
+<!--        android:text="Euphoric"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/lavender"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold" />-->
+
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/homescreen_logo" />
+        android:src="@drawable/homescreen_logo_only" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/signUp"
-        android:fontFamily="@font/arvo"
+        android:text="Euphoric"
+        android:fontFamily="@font/dancing_script"
         android:textColor="@color/lavender"
-        android:textSize="25sp"
+        android:textSize="50sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -147,7 +163,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/home_card"
         android:padding="3dp"
-        android:fontFamily="@font/arvo"
+        android:fontFamily="@font/cabin"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -160,7 +176,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/home_card"
         android:padding="3dp"
-        android:fontFamily="@font/arvo"
+        android:fontFamily="@font/cabin"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"

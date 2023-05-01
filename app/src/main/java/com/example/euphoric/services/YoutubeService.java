@@ -32,7 +32,6 @@ public class YoutubeService {
     public JsonNode suggest() throws IOException {
         String query = getQueryString();
         String queryUrl = urlPrefix + query + urlSuffix;
-        System.out.println(queryUrl);
         return getRequest(queryUrl);
     }
 

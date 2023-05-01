@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.euphoric.R;
-import com.example.euphoric.models.SongList;
+import com.example.euphoric.models.Song;
+import com.example.euphoric.models.SpotifySong;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LikedSongsAdapter extends ArrayAdapter<SongList> {
+public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
-    public LikedSongsAdapter(Activity context , ArrayList<SongList> word){
+    public LikedSongsAdapter(Activity context , ArrayList<SpotifySong> word){
         super(context,0,word);
     }
 
@@ -31,15 +32,15 @@ public class LikedSongsAdapter extends ArrayAdapter<SongList> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.liked_songs_view,parent,false);
         }
 
-        SongList cur = getItem(position);
+        SpotifySong cur = getItem(position);
 
         String name , artist, album , duration;
         String[] genres;
-        name = cur.mSongName;
-        artist = cur.mArtist;
-        album = cur.mAlbum;
-        duration =  cur.mDuration;
-        genres = cur.getmSongGenres();
+        name = cur.getName();
+        artist = cur.getArtist();
+        album = cur.getAlbum();
+        duration =  "20 sec";
+//        genres = ["sdf"];
 
         TextView nameText = view.findViewById(R.id.song_name);
         nameText.setText(name);
@@ -54,7 +55,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SongList> {
         durationText.setText("Duration: " + duration);
 
         TextView genresText = view.findViewById(R.id.song_genres);
-        genresText.setText("Genres: " + Arrays.toString(genres));
+//        genresText.setText("Genres: " + Arrays.toString(genres));
 
         return view;
     }

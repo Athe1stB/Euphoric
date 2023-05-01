@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         || password.getText().equals("") || password.getText().length() == 0) {
                     Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                    mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {

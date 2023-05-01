@@ -34,7 +34,7 @@ public class SpotifySearchService {
     }
 
     public void getTracks(final VolleyCallBack callBack) {
-        String endpoint = "https://api.spotify.com/v1/search?q=" + mood + " artist:arijit&type=track";
+        String endpoint = "https://api.spotify.com/v1/search?q=bollywood%20" + mood + "%20songs&type=track";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     Gson gson = new Gson();

@@ -19,11 +19,10 @@ import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
-import com.example.euphoric.services.SpotifySearchService;
+import com.example.euphoric.services.SpotifyTracksService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -90,8 +89,8 @@ public class DashboardActivity extends AppCompatActivity {
                 likedSongsButton.startAnimation(myAnim);
                 Map<String, Object> ob = FirestoreService.get("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 ArrayList<String> songIds = (ArrayList<String>)ob.get("songIds");
-                SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
-                ss.getTracks(() -> {
+                SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
+                ss.getTracksWithTrackIds(() -> {
                     ArrayList<SpotifySong> songs = ss.getSongs();
                     Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
                     i.putExtra("SongList", songs);

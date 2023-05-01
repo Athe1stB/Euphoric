@@ -8,17 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
-import com.example.euphoric.models.User;
 import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
-import com.example.euphoric.services.SpotifySearchService;
+import com.example.euphoric.services.SpotifyTracksService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -61,8 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
                 likedSongsButton.startAnimation(myAnim);
                 Map<String, Object> ob = FirestoreService.get("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 ArrayList<String> songIds = (ArrayList<String>)ob.get("songIds");
-                SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
-                ss.getTracks(() -> {
+                SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
+                ss.getTracksWithTrackIds(() -> {
                     ArrayList<SpotifySong> songs = ss.getSongs();
                     Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
                     i.putExtra("SongList", songs);

@@ -39,7 +39,7 @@ public class EmotionControllerService {
                 Toast.makeText(context, "YoutubeService: Error", Toast.LENGTH_SHORT).show();
             }
         } else {
-            SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
+            SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
             ss.searchTracks(() -> {
                 ArrayList<SpotifySong> songs = ss.getSongs();
                 Intent i = new Intent(context, LikedSongsActivity.class);

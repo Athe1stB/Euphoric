@@ -9,11 +9,11 @@ import java.util.Objects;
 public class User {
     private int age;
     private String name;
-    private List<Integer> songIds;
+    private List<String> songIds;
     private String userId;
     private String email;
 
-    public User(int age, String name, List<Integer> songIds) {
+    public User(int age, String name, List<String> songIds) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.age = age;
         this.name = name;
@@ -55,11 +55,11 @@ public class User {
         this.email = email;
     }
 
-    public List<Integer> getSongIds() {
+    public List<String> getSongIds() {
         return songIds;
     }
 
-    public void setSongIds(List<Integer> songIds) {
+    public void setSongIds(List<String> songIds) {
         this.songIds = songIds;
     }
 }

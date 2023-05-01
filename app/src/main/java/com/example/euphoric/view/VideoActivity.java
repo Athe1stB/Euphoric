@@ -17,11 +17,7 @@ public class VideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_list);
 
-
         ArrayList<Video> model = (ArrayList<Video>) getIntent().getSerializableExtra("VideoList");
-        for(int i=0; i<model.size(); i++){
-            System.out.println(model.get(i).id + " " + model.get(i).title);
-        }
 
         ListView listView = (ListView) findViewById(R.id.basic_list);
         final VideoAdapter cAdapter = new VideoAdapter(this, model);

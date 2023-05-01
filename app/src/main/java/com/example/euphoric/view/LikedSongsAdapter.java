@@ -5,21 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.euphoric.R;
-import com.example.euphoric.models.SongList;
+import com.example.euphoric.models.SpotifySong;
+import com.example.euphoric.services.FirestoreService;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class LikedSongsAdapter extends ArrayAdapter<SongList> {
+public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
-    public LikedSongsAdapter(Activity context , ArrayList<SongList> word){
-        super(context,0,word);
+    String callerType;
+
+    public LikedSongsAdapter(Activity context, ArrayList<SpotifySong> word, String callerType) {
+        super(context, 0, word);
+        this.callerType = callerType;
     }
 
     @NonNull
@@ -27,19 +32,21 @@ public class LikedSongsAdapter extends ArrayAdapter<SongList> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View view = convertView;
-        if(view == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.liked_songs_view,parent,false);
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.liked_songs_view, parent, false);
         }
 
-        SongList cur = getItem(position);
+        SpotifySong cur = getItem(position);
 
-        String name , artist, album , duration;
+        String id, name, artist, album, duration;
         String[] genres;
-        name = cur.mSongName;
-        artist = cur.mArtist;
-        album = cur.mAlbum;
-        duration =  cur.mDuration;
-        genres = cur.getmSongGenres();
+
+        id = cur.getId();
+        name = cur.getName();
+        artist = cur.getArtist();
+        album = cur.getAlbum();
+        duration = "20 sec";
+//        genres = ["sdf"];
 
         TextView nameText = view.findViewById(R.id.song_name);
         nameText.setText(name);
@@ -54,7 +61,28 @@ public class LikedSongsAdapter extends ArrayAdapter<SongList> {
         durationText.setText("Duration: " + duration);
 
         TextView genresText = view.findViewById(R.id.song_genres);
-        genresText.setText("Genres: " + Arrays.toString(genres));
+//        genresText.setText("Genres: " + Arrays.toString(genres));
+
+        Button likeButton = view.findViewById(R.id.song_like_dislike);
+        if (!callerType.equals("search"))
+            likeButton.setText("Dislike");
+        else
+            likeButton.setText("Like");
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!callerType.equals("search")) {
+                    FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
+                    remove(cur);
+                    notifyDataSetChanged();
+                }
+                else
+                    FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
+            }
+        });
+
+        Button playButton = view.findViewById(R.id.song_play);
 
         return view;
     }

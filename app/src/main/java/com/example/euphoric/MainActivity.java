@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.models.SpotifyUser;
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 case TOKEN:
                     editor = getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE).edit();
                     editor.putString("token", response.getAccessToken());
-                    editor.apply();
                     System.out.println(response.getAccessToken());
+                    editor.apply();
                     waitForUserInfo();
                     Toast.makeText(this, "Spotify Auth successful", Toast.LENGTH_SHORT).show();
                     break;

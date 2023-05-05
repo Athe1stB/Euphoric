@@ -6,14 +6,14 @@ public class SpotifySong implements Serializable {
 
     private String id;
     private String name;
-    private String href;
+    private String uri;
     private String artist;
     private String album;
 
-    public SpotifySong(String id, String name, String href, String artist, String album) {
+    public SpotifySong(String id, String name, String uri, String artist, String album) {
         this.name = name;
         this.id = id;
-        this.href = href;
+        this.uri = uri;
         this.artist = artist;
         this.album = album;
     }
@@ -34,12 +34,12 @@ public class SpotifySong implements Serializable {
         this.name = name;
     }
 
-    public String getHref() {
-        return href;
+    public String getUri() {
+        return uri;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getArtist() {

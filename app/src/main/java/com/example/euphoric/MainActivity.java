@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     editor = getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE).edit();
                     editor.putString("token", response.getAccessToken());
                     editor.apply();
-                    System.out.println(response.getAccessToken());
                     waitForUserInfo();
                     Toast.makeText(this, "Spotify Auth successful", Toast.LENGTH_SHORT).show();
                     break;

@@ -31,7 +31,6 @@ public class SpotifyUserService {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(ENDPOINT, null, response -> {
             Gson gson = new Gson();
             user = gson.fromJson(response.toString(), SpotifyUser.class);
-            System.out.println(response.toString());
             callBack.onSuccess();
         }, error -> get(() -> {
 

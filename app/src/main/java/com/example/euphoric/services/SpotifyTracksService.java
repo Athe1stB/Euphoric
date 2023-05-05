@@ -38,7 +38,6 @@ public class SpotifyTracksService {
         String endpoint = "https://api.spotify.com/v1/search?q=bollywood%20" + mood + "%20songs&type=track";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
-                    Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONObject("tracks").optJSONArray("items");
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {

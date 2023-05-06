@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -70,9 +72,15 @@ public class EmotionControllerActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
                 if(moodText.getText() == null || moodText.getText().toString().equals(""))
                     Toast.makeText(getApplicationContext(), "Enter mood/genre", Toast.LENGTH_SHORT).show();
                 else {
+                    progressBarHolder.setVisibility(View.VISIBLE);
+                    progressBarText.setVisibility(View.VISIBLE);
+                    progressBarText.setText("Fetching songs for you...");
+                    controllerContainer.setVisibility(View.GONE);
                     new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), new String[]{"bollywood"});
                 }
             }

@@ -47,8 +47,20 @@
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/video_list_view.xml" value="0.15742397137745975" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/xml/file_paths.xml" value="0.1096311475409836" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/drawable/ic_arrow.xml" value="0.1155" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/drawable/song_list_card.xml" value="0.169" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_emotion_controller.xml" value="0.1" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_liked_songs.xml" value="0.11005434782608696" />
         <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_login.xml" value="0.10371376811594203" />
         <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_sign_up.xml" value="0.10960144927536232" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_update_profile.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_video.xml" value="0.1" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/basic_list.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.10960144927536232" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/dropdown_item.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/liked_songs_view.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/video_list_view.xml" value="0.4466666666666667" />
       </map>
     </option>
   </component>

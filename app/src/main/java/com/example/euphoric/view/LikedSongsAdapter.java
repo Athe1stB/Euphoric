@@ -1,6 +1,9 @@
 package com.example.euphoric.view;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,11 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.liked_songs_view, parent, false);
         }
 
+        final Context applicationContext = view.getContext();
+
         SpotifySong cur = getItem(position);
 
-        String id, name, artist, album, duration;
+        String id, name, artist, album, duration, uri;
         String[] genres;
 
         id = cur.getId();
@@ -46,6 +51,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         artist = cur.getArtist();
         album = cur.getAlbum();
         duration = "20 sec";
+        uri = cur.getUri();
 //        genres = ["sdf"];
 
         TextView nameText = view.findViewById(R.id.song_name);
@@ -76,13 +82,18 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
                     FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
                     remove(cur);
                     notifyDataSetChanged();
-                }
-                else
+                } else
                     FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
             }
         });
 
         Button playButton = view.findViewById(R.id.song_play);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applicationContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+            }
+        });
 
         return view;
     }

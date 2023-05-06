@@ -44,7 +44,7 @@ public class SpotifyTracksService {
                             JSONObject object = jsonArray.getJSONObject(n);
                             String songId = object.getString("id");
                             String songName = object.getString("name");
-                            String songUrl = object.getString("href");
+                            String songUrl = object.getString("uri");
                             String songArtists = "";
                             JSONArray artists = object.getJSONArray("artists");
                             for(int i=0; i<artists.length(); i++){
@@ -89,7 +89,7 @@ public class SpotifyTracksService {
                             JSONObject object = jsonArray.getJSONObject(n);
                             String songId = object.getString("id");
                             String songName = object.getString("name");
-                            String songUrl = object.getString("href");
+                            String songUrl = object.getString("uri");
                             String songArtists = "";
                             JSONArray artists = object.getJSONArray("artists");
                             for(int i=0; i<artists.length(); i++){
@@ -134,7 +134,7 @@ public class SpotifyTracksService {
                             JSONObject object = jsonArray.getJSONObject(n);
                             String songId = object.getString("id");
                             String songName = object.getString("name");
-                            String songUrl = object.getString("href");
+                            String songUrl = object.getString("uri");
                             String songArtists = "";
                             JSONArray artists = object.getJSONArray("artists");
                             for(int i=0; i<artists.length(); i++){

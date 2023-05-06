@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmotionControllerService {
     RequestQueue requestQueue;
@@ -25,7 +27,7 @@ public class EmotionControllerService {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void controller(Boolean isVideoInput, Context context, String mood, String[] filters){
+    public void controller(Boolean isVideoInput, Context context, String mood, String[] filters) {
         if (isVideoInput) {
             YoutubeService youtubeService = new YoutubeService(mood, filters);
             try {
@@ -39,14 +41,21 @@ public class EmotionControllerService {
                 Toast.makeText(context, "YoutubeService: Error", Toast.LENGTH_SHORT).show();
             }
         } else {
-            SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
-            ss.searchTracks(() -> {
-                ArrayList<SpotifySong> songs = ss.getSongs();
-                Intent i = new Intent(context, LikedSongsActivity.class);
-                i.putExtra("SongList", songs);
-                i.putExtra("caller_type", "search");
-                context.startActivity(i);
-            }, mood);
+            SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
+            Set<SpotifySong> songs = new HashSet<>();
+            ss.searchTracks("positive", () -> {
+                ArrayList<SpotifySong> s = ss.getSongs();
+                System.out.println(s.size() + " " + s);
+                songs.addAll(s);
+                ss.setTotalCounts(ss.getTotalCounts()-1);
+                if(ss.getTotalCounts() == 0) {
+                    System.out.println("final songs " + songs.size() + " " + songs);
+                    Intent i = new Intent(context, LikedSongsActivity.class);
+                    i.putExtra("SongList", songs.toArray());
+                    i.putExtra("caller_type", "search");
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }

@@ -1,18 +1,24 @@
 package com.example.euphoric.services;
 
+import static android.os.Build.VERSION_CODES.R;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.android.volley.RequestQueue;
+import com.example.euphoric.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,12 +74,16 @@ public class CameraService {
                         Uri downloadUri = task.getResult();
                         try {
                             String mood = new EmotionApiService().getMood(downloadUri.toString());
-                            if (mood == null || mood.equals("null"))
+                            if (mood == null || mood.equals("null")) {
+                                LinearLayout progressBarContainer = ((Activity) context).findViewById(com.example.euphoric.R.id.progress_bar_container);
+                                progressBarContainer.setVisibility(View.GONE);
+                                LinearLayout emotionControllerBlock = ((Activity) context).findViewById(com.example.euphoric.R.id.controller_content);
+                                emotionControllerBlock.setVisibility(View.VISIBLE);
                                 Toast.makeText(context, "Could not recognize face. Please try again!", Toast.LENGTH_SHORT).show();
-                            else {
-                                mood = mood.substring(1, mood.length()-1);
+                            } else {
+                                mood = mood.substring(1, mood.length() - 1);
                                 System.out.println(mood);
-                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, new String[]{"evergreen", "bollywood"});
+                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, new String[]{"evergreen", "bollywood" });
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

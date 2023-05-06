@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
-
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,7 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.R;
@@ -41,6 +39,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
     LinearLayout controllerContainer;
     FrameLayout progressBarHolder;
     TextView progressBarText;
+    Button searchButton;
     ActivityResultLauncher<Uri> mGetContent;
     Task<Uri> task;
     Uri uri;
@@ -67,7 +66,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
 
     private void handleManualSuggestion(SwitchCompat switchCompat){
         AppCompatEditText moodText = findViewById(R.id.mood_input);
-        Button searchButton = findViewById(R.id.search_on_mood);
+        searchButton = findViewById(R.id.search_on_mood);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +127,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             cameraLL.setEnabled(false);
+            searchButton.setEnabled(false);
             inAnimation = new AlphaAnimation(0f, 1f);
             inAnimation.setDuration(200);
             progressBarHolder.setAnimation(inAnimation);
@@ -145,6 +145,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
             progressBarHolder.setAnimation(outAnimation);
             progressBarText.setText("Fetching content for you...");
             cameraLL.setEnabled(true);
+            searchButton.setEnabled(true);
         }
 
         @Override

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpotifySearchService {
-    private String[] positiveMoodSongs = new String[]{"afrobeat", "alt-rock", "alternative", "black-metal", "bluegrass" }; // "blues", "bossanova", "brazil", "breakbeat", "cantopop", "chicago-house", "club", "comedy", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "forro", "funk", "garage", "goth", "grindcore", "groove", "grunge", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "house", "idm", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "mpb", "opera", "pagode", "party", "philippines-opm", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "salsa", "samba", "ska", "soul", "summer", "synth-pop", "tango", "techno", "trance", "trip-hop", "work-out" };
+    private String[] positiveMoodSongs = new String[]{"afrobeat", "alt-rock", "alternative", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "cantopop", "chicago-house", "club", "comedy", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "forro", "funk", "garage", "goth", "grindcore", "groove", "grunge", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "house", "idm", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "mpb", "opera", "pagode", "party", "philippines-opm", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "salsa", "samba", "ska", "soul", "summer", "synth-pop", "tango", "techno", "trance", "trip-hop", "work-out" };
     private String[] negativeMoodSongs = new String[]{"romance", "acoustic", "ambient", "children", "chill", "classical", "country", "gospel", "guitar", "happy", "holidays", "honky-tonk", "kids", "new-age", "piano", "sleep", "study", "folk" };
     private String[] sad = new String[]{"emo", "sad", "sertanejo", "rainy-day" };
     private ArrayList<SpotifySong> songs = new ArrayList<>();
@@ -59,7 +59,7 @@ public class SpotifySearchService {
                 queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5");
             }
         } else
-            queries.add("https://api.spotify.com/v1/search?q=songs&type=track");
+            queries.add("https://api.spotify.com/v1/search?type=track&limit=50");
         return queries;
     }
 

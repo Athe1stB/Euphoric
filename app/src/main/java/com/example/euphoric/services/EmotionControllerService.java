@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,16 +43,17 @@ public class EmotionControllerService {
             }
         } else {
             SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
-            Set<SpotifySong> songs = new HashSet<>();
-            ss.searchTracks("positive", () -> {
+            Set<SpotifySong> songs = Collections.synchronizedSet(new HashSet<>());
+            ss.searchTracks(mood, () -> {
                 ArrayList<SpotifySong> s = ss.getSongs();
                 System.out.println(s.size() + " " + s);
                 songs.addAll(s);
                 ss.setTotalCounts(ss.getTotalCounts()-1);
                 if(ss.getTotalCounts() == 0) {
                     System.out.println("final songs " + songs.size() + " " + songs);
+                    ArrayList<SpotifySong> songsList = new ArrayList<>(songs);
                     Intent i = new Intent(context, LikedSongsActivity.class);
-                    i.putExtra("SongList", songs.toArray());
+                    i.putExtra("SongList", songsList);
                     i.putExtra("caller_type", "search");
                     context.startActivity(i);
                 }

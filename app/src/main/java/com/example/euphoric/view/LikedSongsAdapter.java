@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.services.FirestoreService;
+import com.example.euphoric.services.MyBounceInterpolator;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -40,6 +43,11 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         }
 
         final Context applicationContext = view.getContext();
+
+        //defining animation
+        final Animation myAnim = AnimationUtils.loadAnimation(applicationContext, R.anim.bounce);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
+        myAnim.setInterpolator(interpolator);
 
         SpotifySong cur = getItem(position);
 
@@ -78,6 +86,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                likeButton.startAnimation(myAnim);
                 if (!callerType.equals("search")) {
                     FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
                     remove(cur);
@@ -91,6 +100,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playButton.startAnimation(myAnim);
                 applicationContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
             }
         });

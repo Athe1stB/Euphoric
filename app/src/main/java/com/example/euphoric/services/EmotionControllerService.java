@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.models.Video;
@@ -12,7 +11,6 @@ import com.example.euphoric.models.VideoList;
 import com.example.euphoric.view.LikedSongsActivity;
 import com.example.euphoric.view.VideoActivity;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +18,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EmotionControllerService {
     RequestQueue requestQueue;

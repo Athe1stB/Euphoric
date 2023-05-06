@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;

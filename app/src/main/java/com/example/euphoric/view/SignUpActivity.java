@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.euphoric.R;
@@ -40,11 +41,11 @@ public class SignUpActivity extends AppCompatActivity {
         myAnim.setInterpolator(interpolator);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final Editable name = ((AppCompatEditText) findViewById(R.id.fullName)).getText();
-        final Editable email = ((AppCompatEditText) findViewById(R.id.userEmailId)).getText();
-        final Editable phone = ((AppCompatEditText) findViewById(R.id.mobileNumber)).getText();
-        final Editable password = ((AppCompatEditText) findViewById(R.id.password)).getText();
-        final Editable confirmPassword = ((AppCompatEditText) findViewById(R.id.confirmPassword)).getText();
+        final EditText name = ((AppCompatEditText) findViewById(R.id.fullName));
+        final EditText email = ((AppCompatEditText) findViewById(R.id.userEmailId));
+        final EditText phone = ((AppCompatEditText) findViewById(R.id.mobileNumber));
+        final EditText password = ((AppCompatEditText) findViewById(R.id.password));
+        final EditText confirmPassword = ((AppCompatEditText) findViewById(R.id.confirmPassword));
         final Button signUpButton = findViewById(R.id.signUpButton);
         final Button redirectToLogin = findViewById(R.id.redirectLoginButton);
 
@@ -53,32 +54,25 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         });
 
-        String name1 = name.toString().trim();
-        String email1 = email.toString().trim();
-        String phone1 = phone.toString().trim();
-        String password1 = password.toString().trim();
-        String confirmPassword1 = confirmPassword.toString().trim();
-
         signUpButton.setOnClickListener(v -> {
             signUpButton.startAnimation(myAnim);
-            if (name1.equals("") || name1.length() == 0
-                    || email1.equals("") || email1.length() == 0
-                    || phone1.equals("") || phone1.length() == 0
-                    || password1.equals("") || password1.length() == 0
-                    || confirmPassword1.equals("") || confirmPassword1.length() == 0) {
-
+            if (name.getText().toString().equals("") || name.getText().toString().length() == 0
+                    || email.getText().toString().equals("") || email.getText().toString().length() == 0
+                    || phone.getText().toString().equals("") || phone.getText().toString().length() == 0
+                    || password.getText().toString().equals("") || password.getText().toString().length() == 0
+                    || confirmPassword.getText().toString().equals("") || confirmPassword.getText().toString().length() == 0) {
                 Toast.makeText(SignUpActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
-            } else if (!(password.toString().equals(confirmPassword.toString()))) {
+            } else if (!(password.getText().toString().trim().equals(confirmPassword.getText().toString().trim()))) {
                 Toast.makeText(SignUpActivity.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
             } else {
-                mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
+                mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 List<String> songIds = Collections.emptyList();
-                                User user = new User(12, "Biswa", songIds);
-                                FirestoreService.set(user, "Users", email.toString());
+                                User user = new User(12, name.getText().toString().trim(), songIds);
+                                FirestoreService.set(user, "Users", email.getText().toString().trim());
                                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                 Log.d(TAG, "successfully created user");
                             } else {

@@ -27,7 +27,17 @@ import java.util.Objects;
 
 public class CameraService {
 
-    public static void persistImageAndCallApi(Context context, Uri uri, Boolean isVideoInput, RequestQueue requestQueue, SharedPreferences sharedPreferences) {
+    Context context;
+    RequestQueue requestQueue;
+    SharedPreferences sharedPreferences;
+
+    public CameraService(Context context, RequestQueue requestQueue, SharedPreferences sharedPreferences) {
+        this.context = context;
+        this.requestQueue = requestQueue;
+        this.sharedPreferences = sharedPreferences;
+    }
+
+    public Task<Uri> persistImageAndCallApi(Uri uri, Boolean isVideoInput) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         String uuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -73,8 +83,10 @@ public class CameraService {
                     }
                 }
             });
+            return urlTask;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

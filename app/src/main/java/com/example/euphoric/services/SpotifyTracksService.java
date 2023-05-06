@@ -34,49 +34,9 @@ public class SpotifyTracksService {
         return songs;
     }
 
-    public void searchTracks(final VolleyCallBack callBack, String mood) {
-        String endpoint = "https://api.spotify.com/v1/search?q=bollywood%20" + mood + "%20songs&type=track";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, endpoint, null, response -> {
-                    JSONArray jsonArray = response.optJSONObject("tracks").optJSONArray("items");
-                    for (int n = 0; n < jsonArray.length(); n++) {
-                        try {
-                            JSONObject object = jsonArray.getJSONObject(n);
-                            String songId = object.getString("id");
-                            String songName = object.getString("name");
-                            String songUrl = object.getString("uri");
-                            String songArtists = "";
-                            JSONArray artists = object.getJSONArray("artists");
-                            for(int i=0; i<artists.length(); i++){
-                                songArtists+= ((i>0)?", ":"") + object.getString("name");
-                            }
-                            String songAlbum = object.getJSONObject("album").getString("name");
-                            SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);
-                            songs.add(song);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    callBack.onSuccess();
-                }, error -> {
-                    // TODO: Handle error
-                    System.out.println("Error fetching songs");
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                String token = sharedPreferences.getString("token", "");
-                String auth = "Bearer " + token;
-                headers.put("Authorization", auth);
-                return headers;
-            }
-        };
-        queue.add(jsonObjectRequest);
-    }
-
     public void getTracksWithTrackIds(final VolleyCallBack callBack, ArrayList<String> trackIds) {
         StringBuilder tracks = new StringBuilder();
-        for(int i=0; i<trackIds.size(); i++)
+        for (int i = 0; i < trackIds.size(); i++)
             tracks.append((i > 0) ? "," : "").append(trackIds.get(i));
 
         String endpoint = "https://api.spotify.com/v1/tracks?ids=" + tracks;
@@ -92,8 +52,8 @@ public class SpotifyTracksService {
                             String songUrl = object.getString("uri");
                             String songArtists = "";
                             JSONArray artists = object.getJSONArray("artists");
-                            for(int i=0; i<artists.length(); i++){
-                                songArtists+= ((i>0)?", ":"") + object.getString("name");
+                            for (int i = 0; i < artists.length(); i++) {
+                                songArtists += ((i > 0) ? ", " : "") + object.getString("name");
                             }
                             String songAlbum = object.getJSONObject("album").getString("name");
                             SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);
@@ -121,7 +81,7 @@ public class SpotifyTracksService {
 
     public void getRecommendations(final VolleyCallBack callBack, ArrayList<String> trackIds) {
         StringBuilder tracks = new StringBuilder();
-        for(int i=0; i<min(5,trackIds.size()); i++)
+        for (int i = 0; i < min(5, trackIds.size()); i++)
             tracks.append((i > 0) ? "," : "").append(trackIds.get(i));
 
         String endpoint = "https://api.spotify.com/v1/recommendations?market=IN&limit=50&seed_tracks=" + tracks;
@@ -137,8 +97,8 @@ public class SpotifyTracksService {
                             String songUrl = object.getString("uri");
                             String songArtists = "";
                             JSONArray artists = object.getJSONArray("artists");
-                            for(int i=0; i<artists.length(); i++){
-                                songArtists+= ((i>0)?", ":"") + object.getString("name");
+                            for (int i = 0; i < artists.length(); i++) {
+                                songArtists += ((i > 0) ? ", " : "") + object.getString("name");
                             }
                             String songAlbum = object.getJSONObject("album").getString("name");
                             SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);

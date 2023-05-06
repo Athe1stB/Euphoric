@@ -16,12 +16,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EmotionControllerService {
     RequestQueue requestQueue;
     SharedPreferences sharedPreferences;
+    private final Map<String, String> emotionMap = new HashMap<String, String>() {{
+        put("angry", "negative");
+        put("fear", "negative");
+        put("disgust", "negative");
+        put("sad", "negative");
+        put("happy", "positive");
+        put("surprise", "positive");
+        put("neutral", "neutral");
+    }};
 
     public EmotionControllerService(RequestQueue requestQueue, SharedPreferences sharedPreferences) {
         this.requestQueue = requestQueue;
@@ -44,7 +57,7 @@ public class EmotionControllerService {
         } else {
             SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
             Set<SpotifySong> songs = Collections.synchronizedSet(new HashSet<>());
-            ss.searchTracks(mood, () -> {
+            ss.searchTracks(emotionMap.get(mood), () -> {
                 ArrayList<SpotifySong> s = ss.getSongs();
                 System.out.println(s.size() + " " + s);
                 songs.addAll(s);

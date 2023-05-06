@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpotifySearchService {
-    private String[] positiveMoodSongs = new String[]{"afrobeat", "alt-rock", "alternative", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "cantopop", "chicago-house", "club", "comedy", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "forro", "funk", "garage", "goth", "grindcore", "groove", "grunge", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "house", "idm", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "mpb", "opera", "pagode", "party", "philippines-opm", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "salsa", "samba", "ska", "soul", "summer", "synth-pop", "tango", "techno", "trance", "trip-hop", "work-out" };
-    private String[] negativeMoodSongs = new String[]{"romance", "acoustic", "ambient", "children", "chill", "classical", "country", "gospel", "guitar", "happy", "holidays", "honky-tonk", "kids", "new-age", "piano", "sleep", "study", "folk" };
-    private String[] sad = new String[]{"emo", "sad", "sertanejo", "rainy-day" };
-    private ArrayList<SpotifySong> songs = new ArrayList<>();
-    private SharedPreferences sharedPreferences;
-    private RequestQueue queue;
+    private final String[] positiveMoodSongs = new String[]{"afrobeat", "alt-rock", "alternative", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "cantopop", "chicago-house", "club", "comedy", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "forro", "funk", "garage", "goth", "grindcore", "groove", "grunge", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "house", "idm", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "mpb", "opera", "pagode", "party", "philippines-opm", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "salsa", "samba", "ska", "soul", "summer", "synth-pop", "tango", "techno", "trance", "trip-hop", "work-out" };
+    private final String[] negativeMoodSongs = new String[]{"romance", "acoustic", "ambient", "children", "chill", "classical", "country", "gospel", "guitar", "happy", "holidays", "honky-tonk", "kids", "new-age", "piano", "sleep", "study", "folk" };
+    private final String[] sad = new String[]{"emo", "sad", "sertanejo", "rainy-day" };
+    private final ArrayList<SpotifySong> songs = new ArrayList<>();
+    private final SharedPreferences sharedPreferences;
+    private final RequestQueue queue;
 
     public void setTotalCounts(int totalCounts) {
         this.totalCounts = totalCounts;
@@ -50,16 +50,17 @@ public class SpotifySearchService {
 
     private ArrayList<String> getSpotifyQueryString(String genreMapping) {
         ArrayList<String> queries = new ArrayList<>();
+        int offset = (int)(Math.random() * (500 - 1 + 1) + 1);
         if (genreMapping.equals("positive")) {
             for (String positiveMoodSong : positiveMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + positiveMoodSong + "&type=track&limit=5");
+                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + positiveMoodSong + "&type=track&limit=5&offset="+offset);
             }
         } else if (genreMapping.equals("negative")) {
             for (String negativeMoodSong : negativeMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5");
+                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5&offset="+offset);
             }
         } else
-            queries.add("https://api.spotify.com/v1/search?type=track&limit=50");
+            queries.add("https://api.spotify.com/v1/search?q=%25a%25&type=track&limit=50&offset="+offset);
         return queries;
     }
 

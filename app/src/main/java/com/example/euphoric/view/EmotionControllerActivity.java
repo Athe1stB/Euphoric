@@ -43,7 +43,6 @@ public class EmotionControllerActivity extends AppCompatActivity {
     ActivityResultLauncher<Uri> mGetContent;
     Task<Uri> task;
     Uri uri;
-    MyTask myTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,6 @@ public class EmotionControllerActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
 
-        myTask = new MyTask();
         controllerContainer = findViewById(R.id.controller_content);
         progressBarHolder = findViewById(R.id.progressBarHolder);
         progressBarText = findViewById(R.id.progress_text);
@@ -99,7 +97,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                         if (result) {
                             CameraService cs = new CameraService(EmotionControllerActivity.this, requestQueue, sharedPreferences);
                             task = cs.persistImageAndCallApi(uri, switchCompat.isChecked());
-                            myTask.execute();
+                            new MyTask().execute();
                         } else {
                             Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();
                         }

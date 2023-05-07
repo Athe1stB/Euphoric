@@ -137,7 +137,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     progressTextContainer.setVisibility(View.VISIBLE);
                     progressBarTitle.setText(R.string.fetchingSongs);
                     progressBarMsg.setText("");
-                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), language.getText().toString(), new String[]{"bollywood" });
+                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), language.getText().toString());
                 }
             }
         });

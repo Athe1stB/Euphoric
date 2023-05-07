@@ -40,9 +40,9 @@ public class EmotionControllerService {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void controller(Boolean isVideoInput, Context context, String mood, String language, String[] filters) {
+    public void controller(Boolean isVideoInput, Context context, String mood, String language) {
         if (isVideoInput) {
-            YoutubeService youtubeService = new YoutubeService(mood, filters);
+            YoutubeService youtubeService = new YoutubeService(mood, language);
             try {
                 JsonNode result = youtubeService.suggest();
                 ArrayList<Video> videoList = new VideoList(result).getVideoList();

@@ -83,7 +83,7 @@ public class CameraService {
                             } else {
                                 mood = mood.substring(1, mood.length() - 1);
                                 System.out.println(mood);
-                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, language, new String[]{"evergreen", "bollywood" });
+                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, language);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

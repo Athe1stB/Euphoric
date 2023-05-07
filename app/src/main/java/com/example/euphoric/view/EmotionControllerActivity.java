@@ -171,7 +171,6 @@ public class EmotionControllerActivity extends AppCompatActivity {
             progressBarHolder.setAnimation(inAnimation);
             controllerContainer.setVisibility(View.GONE);
             progressBarHolder.setVisibility(View.VISIBLE);
-            System.out.println("make progressBar visible");
             progressTextContainer.setVisibility(View.VISIBLE);
             progressBarTitle.setText(R.string.detectingMood);
         }

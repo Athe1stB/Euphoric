@@ -16,7 +16,7 @@ public class EmotionApiService {
 
     public String getMood(String urlImage) throws IOException {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "{\"url_image\":\""+ urlImage + "\"}");
+        RequestBody body = RequestBody.create(JSON, "{\"url_image\":\"" + urlImage + "\"}");
 
         Request request = new Request.Builder()
                 .url(ENDPOINT)
@@ -32,6 +32,6 @@ public class EmotionApiService {
         Call call = client.newCall(request);
         Response response = call.execute();
 
-        return (response.body() == null)? "No face" : Objects.requireNonNull(response.body()).string();
+        return (response.body() == null) ? "No face" : Objects.requireNonNull(response.body()).string();
     }
 }

@@ -25,105 +25,105 @@ public class FirestoreService {
 
     public static void add(Object data, String collectionPath) {
         db.collection(collectionPath)
-            .add(data)
-            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error adding document", e);
-                }
-            });
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     public static void set(Object data, String collectionPath, String documentName) {
         db.collection(collectionPath).document(documentName)
-            .set(data)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "DocumentSnapshot successfully written!");
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error writing document", e);
-                }
-            });
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
     public static Map<String, Object> get(String collectionPath, String documentName) {
-        Task<DocumentSnapshot> ds =  db.collection(collectionPath).document(documentName)
-            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            document.getData();
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+        Task<DocumentSnapshot> ds = db.collection(collectionPath).document(documentName)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                document.getData();
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
                         } else {
-                            Log.d(TAG, "No such document");
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                }
-            });
-        while(!ds.isComplete());
+                });
+        while (!ds.isComplete()) ;
         return ds.getResult().getData();
     }
 
     public static void update(Map<String, Object> data, String collectionPath, String documentName) {
         db.collection(collectionPath).document(documentName)
-            .update(data)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "DocumentSnapshot successfully updated!");
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error updating document", e);
-                }
-            });
+                .update(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 
-    public static void addArrayElement(String collectionPath, String documentName, String arrayName, String element){
-        Map<String, Object> ob = get(collectionPath,documentName);
-        if(!((List<String>) ob.get(arrayName)).contains(element)) {
+    public static void addArrayElement(String collectionPath, String documentName, String arrayName, String element) {
+        Map<String, Object> ob = get(collectionPath, documentName);
+        if (!((List<String>) ob.get(arrayName)).contains(element)) {
             db.collection(collectionPath).document(documentName)
                     .update(arrayName, FieldValue.arrayUnion(element));
         }
     }
 
-    public static void deleteArrayElement(String collectionPath, String documentName, String arrayName, String element){
+    public static void deleteArrayElement(String collectionPath, String documentName, String arrayName, String element) {
         db.collection(collectionPath).document(documentName)
                 .update(arrayName, FieldValue.arrayRemove(element));
     }
 
-    public static void delete(String collectionPath, String documentName){
+    public static void delete(String collectionPath, String documentName) {
         db.collection(collectionPath).document(documentName)
-            .delete()
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error deleting document", e);
-                }
-            });
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 }
 

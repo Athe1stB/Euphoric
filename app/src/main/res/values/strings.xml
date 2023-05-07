@@ -45,6 +45,39 @@
         <item>Almost there</item>
     </string-array>
 
+    <!-- languages for dropdown box -->
+    <string-array name="languages">
+        <item>No Preference</item>
+        <item>Arabic</item>
+        <item>Assamese</item>
+        <item>Bangla</item>
+        <item>Bengali</item>
+        <item>Bhojpuri</item>
+        <item>Chinese</item>
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Gujarati</item>
+        <item>Hindi</item>
+        <item>Japanese</item>
+        <item>Kannada</item>
+        <item>Kashmiri</item>
+        <item>Korean</item>
+        <item>Malayalam</item>
+        <item>Manipuri</item>
+        <item>Marathi</item>
+        <item>Nepali</item>
+        <item>Oriya</item>
+        <item>Pahari</item>
+        <item>Punjabi</item>
+        <item>Rajasthani</item>
+        <item>Sindhi</item>
+        <item>Spanish</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Urdu</item>
+    </string-array>
+
 <!--    spotify related constants    -->
     <string name="CLIENT_ID">18fc031bc8954e259f1f178449f209f8</string>
     <string name="REDIRECT_URI">com.example.euphoric://callback</string>

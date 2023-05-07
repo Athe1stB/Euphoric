@@ -83,17 +83,17 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
                     mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
-                                    Log.d(TAG, "successfully created user");
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Cannot log in", Toast.LENGTH_SHORT).show();
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                                        Log.d(TAG, "successfully created user");
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Cannot log in", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
                 }
             }
         });

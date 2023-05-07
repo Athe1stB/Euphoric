@@ -63,7 +63,7 @@ public class VideoAdapter extends ArrayAdapter<Video> {
             @Override
             public void onClick(View v) {
                 Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://youtu.be/"+id));
+                        Uri.parse("https://youtu.be/" + id));
                 v.getContext().startActivity(webIntent);
             }
         });

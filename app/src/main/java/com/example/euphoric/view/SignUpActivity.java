@@ -66,20 +66,20 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
             } else {
                 mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                List<String> songIds = Collections.emptyList();
-                                User user = new User(12, name.getText().toString().trim(), songIds);
-                                FirestoreService.set(user, "Users", email.getText().toString().trim());
-                                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
-                                Log.d(TAG, "successfully created user");
-                            } else {
-                                Toast.makeText(SignUpActivity.this, "Cannot create User", Toast.LENGTH_SHORT).show();
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    List<String> songIds = Collections.emptyList();
+                                    User user = new User(12, name.getText().toString().trim(), songIds);
+                                    FirestoreService.set(user, "Users", email.getText().toString().trim());
+                                    startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                                    Log.d(TAG, "successfully created user");
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Cannot create User", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
             }
         });
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
+import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.models.Video;
 import com.example.euphoric.models.VideoList;
@@ -53,17 +54,18 @@ public class EmotionControllerService {
         } else {
             SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
             Set<SpotifySong> songs = Collections.synchronizedSet(new HashSet<>());
-            ss.searchTracks(emotionMap.get(mood), () -> {
+            ss.searchTracks(emotionMap.containsKey(mood)?emotionMap.get(mood):"neutral", () -> {
                 ArrayList<SpotifySong> s = ss.getSongs();
-                System.out.println(s.size() + " " + s);
                 songs.addAll(s);
                 ss.setTotalCounts(ss.getTotalCounts()-1);
                 if(ss.getTotalCounts() == 0) {
-                    System.out.println("final songs " + songs.size() + " " + songs);
+                    System.out.println("mood: " + mood + " total songs count: " + songs.size());
                     ArrayList<SpotifySong> songsList = new ArrayList<>(songs);
                     Intent i = new Intent(context, LikedSongsActivity.class);
                     i.putExtra("SongList", songsList);
                     i.putExtra("caller_type", "search");
+                    i.putExtra("contains_songs", songsList.size()>0);
+                    i.putExtra("error_msg", context.getResources().getString(R.string.no_tracks));
                     context.startActivity(i);
                 }
             });

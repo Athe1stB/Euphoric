@@ -128,8 +128,8 @@
         android:id="@+id/progress_bar_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/progressBarHolder"
@@ -146,15 +146,35 @@
                 android:layout_gravity="center"
                 android:indeterminate="true" />
         </FrameLayout>
-        <TextView
-            android:id="@+id/progress_text"
+
+        <LinearLayout
+            android:id="@+id/progress_text_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detecting mood ..."
-            android:textColor="@color/lavender"
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:layout_margin="8dp"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/literate"
+                android:text="@string/detectingMood"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/progress_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/literate"
+                android:text="@string/detectingMood"
+                android:textColor="@color/lavender"
+                android:textSize="11sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

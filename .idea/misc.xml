@@ -30,7 +30,7 @@
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/font/delius_swash_caps.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_content_recommendation.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
-        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_emotion_controller.xml" value="0.12" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_emotion_controller.xml" value="0.25555555555555554" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_liked_songs.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_login.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -43,12 +43,11 @@
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/item_video.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/liked_songs_view.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/list.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/no_tracks.xml" value="0.1526268115942029" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/pausable_progress.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/layout/video_list_view.xml" value="0.15742397137745975" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/biswa/AndroidStudioProjects/Euphoric/app/src/main/res/xml/file_paths.xml" value="0.1096311475409836" />
-        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_login.xml" value="0.10371376811594203" />
-        <entry key="..\:/Users/medha/Documents/Euphoric/app/src/main/res/layout/activity_sign_up.xml" value="0.10960144927536232" />
       </map>
     </option>
   </component>

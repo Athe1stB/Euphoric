@@ -27,6 +27,23 @@
     <string name="already_user">Already have Account? Login here.</string>
     <string name="submit">SUBMIT</string>
     <string name="back">BACK</string>
+    <string name="detectingMood">Detecting mood…</string>
+    <string name="fetchingSongs">"Fetching songs for you…"</string>
+    <string name="no_tracks">No tracks found for the given filters\nPlease try using something else</string>
+    <string name="no_liked_songs">You haven\'t liked any songs yet</string>
+    <string name="no_recommendation">Seems you haven\'t liked any songs yet\nPlease consider liking some songs and let us do the rest</string>
+
+    <!--    messages for waiting while detecting mood-->
+    <string-array name="waitTexts">
+        <item>Good things take time</item>
+        <item>Patience is a virtue</item>
+        <item>Rivers know this: there is no hurry</item>
+        <item>You usually have to wait for that which is worth waiting for</item>
+        <item>Hang on. We\'re just there</item>
+        <item>Waiting for the spark from heaven to fall</item>
+        <item>Patience is bitter, but its fruit is sweet</item>
+        <item>Almost there</item>
+    </string-array>
 
 <!--    spotify related constants    -->
     <string name="CLIENT_ID">18fc031bc8954e259f1f178449f209f8</string>

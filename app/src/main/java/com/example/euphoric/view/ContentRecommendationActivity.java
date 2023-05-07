@@ -79,7 +79,7 @@ public class ContentRecommendationActivity extends AppCompatActivity {
                 if (songs.size() > 0) {
                     setContentView(R.layout.basic_list);
                     ListView listView = (ListView) findViewById(R.id.basic_list);
-                    final LikedSongsAdapter cAdapter = new LikedSongsAdapter(activity, songs, "Recommendations");
+                    final LikedSongsAdapter cAdapter = new LikedSongsAdapter(activity, songs, "recommendations");
                     listView.setAdapter(cAdapter);
                 } else {
                     setContentView(R.layout.no_tracks);

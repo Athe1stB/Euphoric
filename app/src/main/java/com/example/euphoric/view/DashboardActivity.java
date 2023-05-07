@@ -148,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity {
                 ArrayList<SpotifySong> songs = ss.getSongs();
                 Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
                 i.putExtra("SongList", songs);
-                i.putExtra("caller_type", "Dashboard");
+                i.putExtra("caller_type", "Recommendation");
                 i.putExtra("contains_songs", songs.size() > 0);
                 i.putExtra("error_msg", getResources().getString(R.string.no_liked_songs));
                 startActivity(i);

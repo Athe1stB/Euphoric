@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
+import com.example.euphoric.services.SpotifyTracksService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -27,10 +30,13 @@ import java.util.ArrayList;
 public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
     String callerType;
+    ArrayList<String> getNewSongs = new ArrayList<>();
 
     public LikedSongsAdapter(Activity context, ArrayList<SpotifySong> word, String callerType) {
         super(context, 0, word);
         this.callerType = callerType;
+        getNewSongs.add("search");
+        getNewSongs.add("recommendations");
     }
 
     @NonNull
@@ -78,7 +84,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 //        genresText.setText("Genres: " + Arrays.toString(genres));
 
         Button likeButton = view.findViewById(R.id.song_like_dislike);
-        if (!callerType.equals("search"))
+        if (!getNewSongs.contains(callerType))
             likeButton.setText("Dislike");
         else
             likeButton.setText("Like");
@@ -87,12 +93,10 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
             @Override
             public void onClick(View v) {
                 likeButton.startAnimation(myAnim);
-                if (!callerType.equals("search")) {
-                    FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
-                    remove(cur);
-                    notifyDataSetChanged();
-                } else
-                    FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
+                if (!getNewSongs.contains(callerType))
+                    new DeleteSong(id, cur).execute();
+                 else
+                    new AddSong(id).execute();
             }
         });
 
@@ -106,5 +110,55 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         });
 
         return view;
+    }
+
+    private class AddSong extends AsyncTask<Void, Void, Void> {
+        private final String id;
+        public AddSong(String id){
+            super();
+            this.id = id;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);return null;
+        }
+    }
+
+
+    private class DeleteSong extends AsyncTask<Void, Void, Void> {
+        private final String id;
+        private final SpotifySong cur;
+        public DeleteSong(String id, SpotifySong cur){
+            super();
+            this.id = id;
+            this.cur = cur;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            remove(cur);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            FirestoreService.deleteArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
+            return null;
+        }
     }
 }

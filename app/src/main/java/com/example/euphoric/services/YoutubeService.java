@@ -1,13 +1,12 @@
 package com.example.euphoric.services;
 
-import com.example.euphoric.view.EmotionControllerActivity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,24 +16,30 @@ public class YoutubeService {
     private final String urlSuffix = "&type=video&key=AIzaSyAJd9FlE9pWQkoUXn3628Luhml4ZBPSTkU";
     private final String urlPrefix = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=200&q=";
     private final String genre;
-    private final String[] filters;
+    private final String language;
+    private final Map<String, String> genreMap = new HashMap<String, String>() {{
+        put("angry", "peaceful");
+        put("fear", "devotional");
+        put("disgust", "peaceful");
+        put("sad", "peaceful");
+        put("happy", "party");
+        put("surprise", "dance");
+        put("neutral", "popular");
+    }};
 
-    public YoutubeService(String genre, String[] filters) {
-        this.genre = genre;
-        this.filters = filters;
+    public YoutubeService(String mood, String language) {
+        this.genre = genreMap.containsKey(mood) ? genreMap.get(mood) : "popular";
+        this.language = language;
     }
 
     private String getQueryString() {
-        StringBuilder str = new StringBuilder(genre + "+songs");
-        for (String filter : filters) {
-            str.append("+").append(filter);
-        }
-        return str.toString();
+        return language.equals("No Preference") ?
+                genre + " songs"
+                : language + " " + genre + " songs";
     }
 
     public JsonNode suggest() throws IOException {
-        String query = getQueryString();
-        String queryUrl = urlPrefix + query + urlSuffix;
+        String queryUrl = urlPrefix + getQueryString() + urlSuffix;
         return getRequest(queryUrl);
     }
 

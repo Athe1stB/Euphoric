@@ -43,7 +43,7 @@ public class CameraService {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public Task<Uri> persistImageAndCallApi(Uri uri, Boolean isVideoInput) {
+    public Task<Uri> persistImageAndCallApi(Uri uri, Boolean isVideoInput, String language) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         String uuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -83,7 +83,7 @@ public class CameraService {
                             } else {
                                 mood = mood.substring(1, mood.length() - 1);
                                 System.out.println(mood);
-                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, new String[]{"evergreen", "bollywood" });
+                                new EmotionControllerService(requestQueue, sharedPreferences).controller(isVideoInput, context, mood, language);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

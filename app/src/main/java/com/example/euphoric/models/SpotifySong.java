@@ -9,13 +9,17 @@ public class SpotifySong implements Serializable {
     private String uri;
     private String artist;
     private String album;
+    private Long duration;
+    private String thumbnail;
 
-    public SpotifySong(String id, String name, String uri, String artist, String album) {
+    public SpotifySong(String id, String name, String uri, String artist, String album, Long duration, String thumbnail) {
         this.name = name;
         this.id = id;
         this.uri = uri;
         this.artist = artist;
         this.album = album;
+        this.duration = duration;
+        this.thumbnail = thumbnail;
     }
 
     public String getId() {
@@ -56,5 +60,21 @@ public class SpotifySong implements Serializable {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

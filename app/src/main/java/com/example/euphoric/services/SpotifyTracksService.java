@@ -51,13 +51,15 @@ public class SpotifyTracksService {
                                 String songId = object.getString("id");
                                 String songName = object.getString("name");
                                 String songUrl = object.getString("uri");
+                                Long duration = object.getLong("duration_ms");
+                                String thumbnailUrl = object.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
                                 String songArtists = "";
                                 JSONArray artists = object.getJSONArray("artists");
                                 for (int i = 0; i < artists.length(); i++) {
-                                    songArtists += ((i > 0) ? ", " : "") + object.getString("name");
+                                    songArtists += ((i > 0) ? ", " : "") + artists.getJSONObject(i).getString("name");
                                 }
                                 String songAlbum = object.getJSONObject("album").getString("name");
-                                SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);
+                                SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum, duration, thumbnailUrl);
                                 songs.add(song);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -98,13 +100,15 @@ public class SpotifyTracksService {
                                 String songId = object.getString("id");
                                 String songName = object.getString("name");
                                 String songUrl = object.getString("uri");
+                                Long duration = object.getLong("duration_ms");
+                                String thumbnailUrl = object.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
                                 String songArtists = "";
                                 JSONArray artists = object.getJSONArray("artists");
                                 for (int i = 0; i < artists.length(); i++) {
-                                    songArtists += ((i > 0) ? ", " : "") + object.getString("name");
+                                    songArtists += ((i > 0) ? ", " : "") + artists.getJSONObject(i).getString("name");
                                 }
                                 String songAlbum = object.getJSONObject("album").getString("name");
-                                SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum);
+                                SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists, songAlbum, duration, thumbnailUrl);
                                 songs.add(song);
                             } catch (JSONException e) {
                                 e.printStackTrace();

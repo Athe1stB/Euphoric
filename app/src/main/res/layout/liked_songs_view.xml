@@ -1,55 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:background="@drawable/song_list_card"
     android:orientation="horizontal"
-    android:background = "@drawable/song_list_card"
-    android:padding="8dp"
-    android:layout_margin="8dp">
+    android:padding="8dp">
+
     <LinearLayout
         android:id="@+id/llts"
         android:layout_width="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/song_play"
             android:layout_width="wrap_content"
             android:layout_height="30sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/literate"
-            android:background="@drawable/purple_card"
             android:layout_marginBottom="8sp"
+            android:background="@drawable/purple_card"
+            android:fontFamily="@font/literate"
             android:text="Play"
-            android:textSize="8sp"/>
+            android:textColor="@color/white"
+            android:textSize="8sp" />
+
         <Button
             android:id="@+id/song_like_dislike"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/literate"
             android:background="@drawable/home_card"
+            android:fontFamily="@font/literate"
             android:text="Dislike"
-            android:textSize="8sp"/>
+            android:textColor="@color/white"
+            android:textSize="8sp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/song_thumbnail"
+        android:layout_width="200px"
+        android:layout_height="match_parent"
+        android:layout_margin="4px" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="6sp"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/song_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textStyle="bold"
             android:layout_marginEnd="15dp"
+            android:text="Song Name"
             android:textColor="@color/black"
-            android:text="Song Name"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/song_artist"
@@ -57,29 +68,23 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="15dp"
             android:text="Song Artist"
-            android:textColor="@color/grey"
-            />
+            android:textColor="@color/grey" />
+
         <TextView
             android:id="@+id/song_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey"
             android:fontFamily="@font/literate"
-            android:text="Song duration"/>
-        <TextView
-            android:id="@+id/song_genres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/grey"
-            android:fontFamily="@font/literate"
-            android:text="Song genres"/>
+            android:text="Song duration"
+            android:textColor="@color/grey" />
+
         <TextView
             android:id="@+id/song_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey"
             android:fontFamily="@font/literate"
-            android:text="Song Album"/>
+            android:text="Song Album"
+            android:textColor="@color/grey" />
     </LinearLayout>
 
 </LinearLayout>

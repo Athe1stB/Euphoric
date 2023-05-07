@@ -1,9 +1,12 @@
 package com.example.euphoric.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -118,7 +121,15 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 feedbackButton.startAnimation(myAnim);
-//                startActivity(new Intent(getApplicationContext(), LikedSongsActivity.class));
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "info.euphoric@gmail.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Euphoric User Experience");
+                email.putExtra(Intent.EXTRA_TEXT, "I was/wasn't satisfied with your product.");
+
+//need this to prompts email client only
+                email.setType("message/rfc822");
+
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
             }
         });
 

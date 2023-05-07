@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
 import com.example.euphoric.services.SpotifyTracksService;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -57,16 +59,16 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
         SpotifySong cur = getItem(position);
 
-        String id, name, artist, album, duration, uri;
-        String[] genres;
-
+        String id, name, artist, album, uri, thumbnail;
+        long duration = cur.getDuration() / 1000;
         id = cur.getId();
         name = cur.getName();
         artist = cur.getArtist();
         album = cur.getAlbum();
-        duration = "20 sec";
         uri = cur.getUri();
-//        genres = ["sdf"];
+        thumbnail = cur.getThumbnail();
+
+        String durationStr = String.format("%02d:%02d", duration / 60, duration % 60);
 
         TextView nameText = view.findViewById(R.id.song_name);
         nameText.setText(name);
@@ -78,10 +80,10 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         albumText.setText("Album: " + album);
 
         TextView durationText = view.findViewById(R.id.song_duration);
-        durationText.setText("Duration: " + duration);
+        durationText.setText("Duration: " + durationStr);
 
-        TextView genresText = view.findViewById(R.id.song_genres);
-//        genresText.setText("Genres: " + Arrays.toString(genres));
+        ImageView thumbnailImg = view.findViewById(R.id.song_thumbnail);
+        Picasso.get().load(thumbnail).into(thumbnailImg);
 
         Button likeButton = view.findViewById(R.id.song_like_dislike);
         if (!getNewSongs.contains(callerType))
@@ -95,7 +97,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
                 likeButton.startAnimation(myAnim);
                 if (!getNewSongs.contains(callerType))
                     new DeleteSong(id, cur).execute();
-                 else
+                else
                     new AddSong(id).execute();
             }
         });
@@ -114,10 +116,12 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
     private class AddSong extends AsyncTask<Void, Void, Void> {
         private final String id;
-        public AddSong(String id){
+
+        public AddSong(String id) {
             super();
             this.id = id;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -130,7 +134,8 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
         @Override
         protected Void doInBackground(Void... params) {
-            FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);return null;
+            FirestoreService.addArrayElement("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail(), "songIds", id);
+            return null;
         }
     }
 
@@ -138,11 +143,13 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
     private class DeleteSong extends AsyncTask<Void, Void, Void> {
         private final String id;
         private final SpotifySong cur;
-        public DeleteSong(String id, SpotifySong cur){
+
+        public DeleteSong(String id, SpotifySong cur) {
             super();
             this.id = id;
             this.cur = cur;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

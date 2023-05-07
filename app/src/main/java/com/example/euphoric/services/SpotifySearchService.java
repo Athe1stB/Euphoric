@@ -52,9 +52,9 @@ public class SpotifySearchService {
     private ArrayList<String> getSpotifyQueryString(String genreMapping, String language) {
         ArrayList<String> queries = new ArrayList<>();
 //        int offset = (int) (Math.random() * (500 - 1 + 1) + 1);
-        String baseQuery = (genreMapping!="neutral")?"q=":"q=%25a%25";
+        String baseQuery = (genreMapping != "neutral") ? "q=" : "q=%25a%25";
         if (!Objects.equals(language, "No Preference")) {
-            baseQuery = (genreMapping!="neutral")?("q=" + language + "%20songs%20")
+            baseQuery = (genreMapping != "neutral") ? ("q=" + language + "%20songs%20")
                     : ("q=" + language + "%20songs");
         }
         if (genreMapping.equals("positive")) {
@@ -80,13 +80,15 @@ public class SpotifySearchService {
                             String songId = object.getString("id");
                             String songName = object.getString("name");
                             String songUrl = object.getString("uri");
+                            Long duration = object.getLong("duration_ms");
+                            String thumbnailUrl = object.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
                             StringBuilder songArtists = new StringBuilder();
                             JSONArray artists = object.getJSONArray("artists");
                             for (int i = 0; i < artists.length(); i++) {
-                                songArtists.append((i > 0) ? ", " : "").append(object.getString("name"));
+                                songArtists.append((i > 0) ? ", " : "").append(artists.getJSONObject(i).getString("name"));
                             }
                             String songAlbum = object.getJSONObject("album").getString("name");
-                            SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists.toString(), songAlbum);
+                            SpotifySong song = new SpotifySong(songId, songName, songUrl, songArtists.toString(), songAlbum, duration, thumbnailUrl);
                             songs.add(song);
                         } catch (JSONException e) {
                             e.printStackTrace();

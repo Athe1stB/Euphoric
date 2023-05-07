@@ -122,11 +122,9 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 feedbackButton.startAnimation(myAnim);
                 Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "info.euphoric@gmail.com"});
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"info.euphoric@gmail.com" });
                 email.putExtra(Intent.EXTRA_SUBJECT, "Euphoric User Experience");
                 email.putExtra(Intent.EXTRA_TEXT, "I was/wasn't satisfied with your product.");
-
-//need this to prompts email client only
                 email.setType("message/rfc822");
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));

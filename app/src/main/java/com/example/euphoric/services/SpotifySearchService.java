@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SpotifySearchService {
     private final String[] positiveMoodSongs = new String[]{"afrobeat", "alt-rock", "alternative", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "cantopop", "chicago-house", "club", "comedy", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "forro", "funk", "garage", "goth", "grindcore", "groove", "grunge", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "house", "idm", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "mpb", "opera", "pagode", "party", "philippines-opm", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "salsa", "samba", "ska", "soul", "summer", "synth-pop", "tango", "techno", "trance", "trip-hop", "work-out" };
@@ -48,19 +49,24 @@ public class SpotifySearchService {
         return totalCounts;
     }
 
-    private ArrayList<String> getSpotifyQueryString(String genreMapping) {
+    private ArrayList<String> getSpotifyQueryString(String genreMapping, String language) {
         ArrayList<String> queries = new ArrayList<>();
-        int offset = (int) (Math.random() * (500 - 1 + 1) + 1);
+//        int offset = (int) (Math.random() * (500 - 1 + 1) + 1);
+        String baseQuery = (genreMapping!="neutral")?"q=":"q=%25a%25";
+        if (!Objects.equals(language, "No Preference")) {
+            baseQuery = (genreMapping!="neutral")?("q=" + language + "%20songs%20")
+                    : ("q=" + language + "%20songs");
+        }
         if (genreMapping.equals("positive")) {
             for (String positiveMoodSong : positiveMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + positiveMoodSong + "&type=track&limit=5&offset=" + offset);
+                queries.add("https://api.spotify.com/v1/search?" + baseQuery + "genre%3a" + positiveMoodSong + "&type=track&limit=5");
             }
         } else if (genreMapping.equals("negative")) {
             for (String negativeMoodSong : negativeMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5&offset=" + offset);
+                queries.add("https://api.spotify.com/v1/search?" + baseQuery + "genre%3a" + negativeMoodSong + "&type=track&limit=5");
             }
         } else
-            queries.add("https://api.spotify.com/v1/search?q=%25a%25&type=track&limit=50&offset=" + offset);
+            queries.add("https://api.spotify.com/v1/search?" + baseQuery + "&type=track&limit=50");
         return queries;
     }
 
@@ -101,8 +107,8 @@ public class SpotifySearchService {
         };
     }
 
-    public void searchTracks(String genreMapping, final VolleyCallBack callBack) {
-        ArrayList<String> endpoints = getSpotifyQueryString(genreMapping);
+    public void searchTracks(String genreMapping, String language, final VolleyCallBack callBack) {
+        ArrayList<String> endpoints = getSpotifyQueryString(genreMapping, language);
         totalCounts = endpoints.size();
         for (String endpoint : endpoints) {
             queue.add(getJsonObjectRequest(endpoint, callBack));

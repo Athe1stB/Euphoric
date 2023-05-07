@@ -29,7 +29,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -41,22 +40,16 @@ import com.google.android.gms.tasks.Task;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.ArrayList;
 
 public class EmotionControllerActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
     SharedPreferences sharedPreferences;
-    TextView textView;
+    TextView language;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
     LinearLayout cameraLL;
@@ -89,7 +82,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
         progressBarMsg = findViewById(R.id.progress_msg);
         progressBarTitle = findViewById(R.id.progress_title);
         SwitchCompat switchCompat = findViewById(R.id.input_type_switch);
-        textView = findViewById(R.id.language);
+        language = findViewById(R.id.language);
         String[] languages = getResources().getStringArray(R.array.languages);
         waitTexts = Arrays.asList(getResources().getStringArray(R.array.waitTexts));
         handler = new Handler(Looper.myLooper());
@@ -144,7 +137,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     progressTextContainer.setVisibility(View.VISIBLE);
                     progressBarTitle.setText(R.string.fetchingSongs);
                     progressBarMsg.setText("");
-                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), new String[]{"bollywood" });
+                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), language.getText().toString(), new String[]{"bollywood" });
                 }
             }
         });
@@ -163,7 +156,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     public void onActivityResult(Boolean result) {
                         if (result) {
                             CameraService cs = new CameraService(EmotionControllerActivity.this, requestQueue, sharedPreferences);
-                            task = cs.persistImageAndCallApi(uri, switchCompat.isChecked());
+                            task = cs.persistImageAndCallApi(uri, switchCompat.isChecked(), language.getText().toString());
                             new MyTask().execute();
                         } else {
                             Toast.makeText(getApplicationContext(), "Could not capture image", Toast.LENGTH_LONG).show();
@@ -179,7 +172,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
     }
 
     private void handleSpinnerDropdown(String[] arrayList) {
-        textView.setOnClickListener(new View.OnClickListener() {
+        language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog dialog = new Dialog(EmotionControllerActivity.this);
@@ -216,7 +209,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        textView.setText(adapter.getItem(i));
+                        language.setText(adapter.getItem(i));
                         dialog.dismiss();
                     }
                 });

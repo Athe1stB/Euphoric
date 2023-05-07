@@ -40,7 +40,7 @@ public class EmotionControllerService {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void controller(Boolean isVideoInput, Context context, String mood, String[] filters) {
+    public void controller(Boolean isVideoInput, Context context, String mood, String language, String[] filters) {
         if (isVideoInput) {
             YoutubeService youtubeService = new YoutubeService(mood, filters);
             try {
@@ -54,15 +54,14 @@ public class EmotionControllerService {
                 Toast.makeText(context, "YoutubeService: Error", Toast.LENGTH_SHORT).show();
             }
         } else {
-            System.out.println("reached here");
             SpotifySearchService ss = new SpotifySearchService(requestQueue, sharedPreferences);
             Set<SpotifySong> songs = Collections.synchronizedSet(new HashSet<>());
-            ss.searchTracks(emotionMap.containsKey(mood) ? emotionMap.get(mood) : "neutral", () -> {
+            ss.searchTracks(emotionMap.containsKey(mood) ? emotionMap.get(mood) : "neutral", language, () -> {
                 ArrayList<SpotifySong> s = ss.getSongs();
                 songs.addAll(s);
                 ss.setTotalCounts(ss.getTotalCounts() - 1);
                 if (ss.getTotalCounts() == 0) {
-                    System.out.println("mood: " + mood + " total songs count: " + songs.size());
+                    System.out.println("mood: " + mood + " language: " + language + " total songs: " + songs.size());
                     ArrayList<SpotifySong> songsList = new ArrayList<>(songs);
                     Intent i = new Intent(context, LikedSongsActivity.class);
                     i.putExtra("SongList", songsList);

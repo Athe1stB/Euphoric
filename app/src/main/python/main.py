@@ -5,6 +5,7 @@ import numpy as np
 import urllib
 import random
 import torch
+import imutils
 from facenet_pytorch.models.mtcnn import MTCNN
 from deepface import DeepFace as emotion_model
 from recommend import *
@@ -105,11 +106,18 @@ def emotion_based(url_image: URLImage):
     req = urllib.request.urlopen(url_image.url_image)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
     img = cv2.imdecode(arr, -1) 
-    faces = mtcnn_detect(img)
-    if faces is None:
+    angles = [0, 90, 180, 270]
+    flag = 0
+    for angle in angles:
+      image = imutils.rotate(img, angle=angle)
+      faces = mtcnn_detect(image)
+      if faces is not None:
+        flag = 1
+        break
+    if flag == 0:
         return None
     else:
-        obj = emotion_model.analyze(img_path=img, actions=['emotion'])
+        obj = emotion_model.analyze(img_path=image, actions=['emotion'])
         emotion = obj[0]['dominant_emotion']
         return emotion
 #         if emotion_mapping[emotion] == 'neutral':

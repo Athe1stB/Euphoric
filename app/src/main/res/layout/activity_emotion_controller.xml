@@ -9,45 +9,54 @@
     tools:context=".view.EmotionControllerActivity">
 
     <LinearLayout
-        android:layout_margin="8dp"
+        android:id="@+id/controller_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/home_card"
-        android:padding="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="What would you prefer today?"
-            android:textColor="@color/purple_700"
-            android:textSize="15sp"/>
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="8dp"
+            android:background="@drawable/home_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Audio"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/input_type_switch"
-                android:layout_width="wrap_content"
+                android:text="What would you prefer today?"
+                android:textColor="@color/purple_700"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:switchMinWidth="80dp"
-                android:checked="true"
-                app:theme="@style/Color1SwitchStyle"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/white"
-                android:text="Video"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Audio"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/input_type_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:switchMinWidth="80dp"
+                    app:theme="@style/Color1SwitchStyle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_margin="8dp"
@@ -86,59 +95,114 @@
         android:background="@drawable/white_card"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/lavender"
-            android:text="Tell us your mood..."/>
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/mood_input"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tell us your mood..."
+                android:textColor="@color/lavender"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/mood_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_700"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp"
+                app:backgroundTint="@color/lavender" />
+
+            <Button
+                android:id="@+id/search_on_mood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple_500"
+                android:text="Search"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/purple_700"
-            android:textCursorDrawable="@null"
-            app:backgroundTint="@color/lavender"
-            />
-        <Button
-            android:id="@+id/search_on_mood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:textColor="@color/white"
-            android:background="@color/purple_500"
-            />
+            android:layout_margin="8dp"
+            android:background="@drawable/white_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Let us suggest..."
+                android:textColor="@color/lavender"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/camera_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/purple_card"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/detect_emotion"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/camera_foreground"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="8dp"
+        android:id="@+id/progress_bar_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/white_card"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/lavender"
-            android:text="Let us suggest..."/>
-
-        <LinearLayout
-            android:id="@+id/camera_ll"
-            android:layout_margin="8dp"
+        <FrameLayout
+            android:id="@+id/progressBarHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@drawable/purple_card">
-            <ImageButton
-                android:id="@+id/detect_emotion"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/camera_foreground"
-                android:gravity="center"/>
+            android:alpha="0.4"
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/progress_text_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/literate"
+                android:text="@string/detectingMood"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/progress_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/literate"
+                android:text="@string/detectingMood"
+                android:textColor="@color/lavender"
+                android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>
 

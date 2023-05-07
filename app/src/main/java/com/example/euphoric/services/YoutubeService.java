@@ -3,6 +3,7 @@ package com.example.euphoric.services;
 import com.example.euphoric.view.EmotionControllerActivity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -18,12 +19,12 @@ public class YoutubeService {
     private final String genre;
     private final String[] filters;
 
-    public YoutubeService(String genre, String[] filters){
+    public YoutubeService(String genre, String[] filters) {
         this.genre = genre;
         this.filters = filters;
     }
 
-    private String getQueryString(){
+    private String getQueryString() {
         StringBuilder str = new StringBuilder(genre + "+songs");
         for (String filter : filters) {
             str.append("+").append(filter);
@@ -49,11 +50,10 @@ public class YoutubeService {
 
         Call call = client.newCall(request);
         Response response = call.execute();
-        if(response.code() == 200) {
+        if (response.code() == 200) {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readTree(Objects.requireNonNull(response.body()).string());
-        }
-        else{
+        } else {
             System.out.println(response.code() + " : " + Objects.requireNonNull(response.body()).string());
             return null;
         }

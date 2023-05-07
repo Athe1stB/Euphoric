@@ -44,23 +44,23 @@ public class SpotifySearchService {
         return songs;
     }
 
-    public int getTotalCounts(){
+    public int getTotalCounts() {
         return totalCounts;
     }
 
     private ArrayList<String> getSpotifyQueryString(String genreMapping) {
         ArrayList<String> queries = new ArrayList<>();
-        int offset = (int)(Math.random() * (500 - 1 + 1) + 1);
+        int offset = (int) (Math.random() * (500 - 1 + 1) + 1);
         if (genreMapping.equals("positive")) {
             for (String positiveMoodSong : positiveMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + positiveMoodSong + "&type=track&limit=5&offset="+offset);
+                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + positiveMoodSong + "&type=track&limit=5&offset=" + offset);
             }
         } else if (genreMapping.equals("negative")) {
             for (String negativeMoodSong : negativeMoodSongs) {
-                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5&offset="+offset);
+                queries.add("https://api.spotify.com/v1/search?q=genre%3a" + negativeMoodSong + "&type=track&limit=5&offset=" + offset);
             }
         } else
-            queries.add("https://api.spotify.com/v1/search?q=%25a%25&type=track&limit=50&offset="+offset);
+            queries.add("https://api.spotify.com/v1/search?q=%25a%25&type=track&limit=50&offset=" + offset);
         return queries;
     }
 

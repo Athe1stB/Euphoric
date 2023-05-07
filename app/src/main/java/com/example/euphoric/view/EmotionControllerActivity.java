@@ -178,7 +178,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
         });
     }
 
-    private void handleSpinnerDropdown(String[] arrayList){
+    private void handleSpinnerDropdown(String[] arrayList) {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,7 +192,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 ListView listView = dialog.findViewById(R.id.list_view);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(EmotionControllerActivity.this
-                        , android.R.layout.simple_list_item_1,arrayList);
+                        , android.R.layout.simple_list_item_1, arrayList);
 
                 listView.setAdapter(adapter);
 

@@ -30,8 +30,7 @@ public class LikedSongsActivity extends AppCompatActivity {
             ListView listView = (ListView) findViewById(R.id.basic_list);
             final LikedSongsAdapter cAdapter = new LikedSongsAdapter(this, songs, callerType);
             listView.setAdapter(cAdapter);
-        }
-        else{
+        } else {
             setContentView(R.layout.no_tracks);
             TextView tv = findViewById(R.id.track_error_msg);
             tv.setText(errorMsg);

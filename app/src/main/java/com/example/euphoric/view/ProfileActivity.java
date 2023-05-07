@@ -58,14 +58,14 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 likedSongsButton.startAnimation(myAnim);
                 Map<String, Object> ob = FirestoreService.get("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                ArrayList<String> songIds = (ArrayList<String>)ob.get("songIds");
+                ArrayList<String> songIds = (ArrayList<String>) ob.get("songIds");
                 SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
                 ss.getTracksWithTrackIds(() -> {
                     ArrayList<SpotifySong> songs = ss.getSongs();
                     Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
                     i.putExtra("SongList", songs);
                     i.putExtra("caller_type", "Profile");
-                    i.putExtra("contains_songs", songs.size()>0);
+                    i.putExtra("contains_songs", songs.size() > 0);
                     i.putExtra("error_msg", getResources().getString(R.string.no_liked_songs));
                     startActivity(i);
                 }, songIds);

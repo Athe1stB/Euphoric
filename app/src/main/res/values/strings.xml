@@ -29,6 +29,7 @@
     <string name="back">BACK</string>
     <string name="detectingMood">Detecting mood…</string>
     <string name="fetchingSongs">"Fetching songs for you…"</string>
+    <string name="no_tracks">No tracks found for the given filters\nPlease try using something else</string>
 
 <!--    messages for waiting while detecting mood-->
     <string-array name="waitTexts">

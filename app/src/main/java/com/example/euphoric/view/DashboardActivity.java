@@ -95,6 +95,8 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
                     i.putExtra("SongList", songs);
                     i.putExtra("caller_type", "Dashboard");
+                    i.putExtra("contains_songs", songs.size()>0);
+                    i.putExtra("error_msg", getResources().getString(R.string.no_liked_songs));
                     startActivity(i);
                 }, songIds);
             }

@@ -30,8 +30,10 @@
     <string name="detectingMood">Detecting mood…</string>
     <string name="fetchingSongs">"Fetching songs for you…"</string>
     <string name="no_tracks">No tracks found for the given filters\nPlease try using something else</string>
+    <string name="no_liked_songs">You haven\'t liked any songs yet</string>
+    <string name="no_recommendation">Seems you haven\'t liked any songs yet\nPlease consider liking some songs and let us do the rest</string>
 
-<!--    messages for waiting while detecting mood-->
+    <!--    messages for waiting while detecting mood-->
     <string-array name="waitTexts">
         <item>Good things take time</item>
         <item>Patience is a virtue</item>

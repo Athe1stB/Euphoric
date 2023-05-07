@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
+
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -20,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.euphoric.R;
@@ -28,6 +32,10 @@ import com.example.euphoric.services.EmotionControllerService;
 import com.google.android.gms.tasks.Task;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EmotionControllerActivity extends AppCompatActivity {
 
@@ -37,12 +45,18 @@ public class EmotionControllerActivity extends AppCompatActivity {
     AlphaAnimation outAnimation;
     LinearLayout cameraLL;
     LinearLayout controllerContainer;
+    LinearLayout progressTextContainer;
     FrameLayout progressBarHolder;
-    TextView progressBarText;
+    TextView progressBarMsg;
+    TextView progressBarTitle;
     Button searchButton;
     ActivityResultLauncher<Uri> mGetContent;
+    List<String> waitTexts;
     Task<Uri> task;
     Uri uri;
+    Handler handler;
+    Runnable runnable;
+    boolean shouldStopHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +67,71 @@ public class EmotionControllerActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
 
         controllerContainer = findViewById(R.id.controller_content);
+        progressTextContainer = findViewById(R.id.progress_text_container);
         progressBarHolder = findViewById(R.id.progressBarHolder);
-        progressBarText = findViewById(R.id.progress_text);
         cameraLL = findViewById(R.id.camera_ll);
-        progressBarText.setVisibility(View.GONE);
+        progressBarMsg = findViewById(R.id.progress_msg);
+        progressBarTitle = findViewById(R.id.progress_title);
         SwitchCompat switchCompat = findViewById(R.id.input_type_switch);
+        waitTexts = Arrays.asList(getResources().getStringArray(R.array.waitTexts));
+        handler = new Handler(Looper.myLooper());
+        shouldStopHandler = true;
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                int max = waitTexts.size();
+                int index = (int) (Math.random() * (max));
+                progressBarMsg.setText(waitTexts.get(index));
+                if (!shouldStopHandler) {
+                    handler.postDelayed(this, 1500);
+                }
+            }
+        };
+
+        progressTextContainer.setVisibility(View.GONE);
         handleManualSuggestion(switchCompat);
         initialiseCameraActions(switchCompat);
     }
 
-    private void handleManualSuggestion(SwitchCompat switchCompat){
+    @Override
+    protected void onPause() {
+        super.onPause();
+        progressBarHolder.setVisibility(View.GONE);
+        progressTextContainer.setVisibility(View.GONE);
+        controllerContainer.setVisibility(View.VISIBLE);
+        shouldStopHandler = true;
+    }
+
+    @Override
+    protected void onStart() {
+        shouldStopHandler = false;
+        handler.post(runnable);
+        super.onStart();
+    }
+
+    private void handleManualSuggestion(SwitchCompat switchCompat) {
         AppCompatEditText moodText = findViewById(R.id.mood_input);
         searchButton = findViewById(R.id.search_on_mood);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
-                if(moodText.getText() == null || moodText.getText().toString().equals(""))
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                if (moodText.getText() == null || moodText.getText().toString().equals(""))
                     Toast.makeText(getApplicationContext(), "Enter mood/genre", Toast.LENGTH_SHORT).show();
                 else {
-                    progressBarHolder.setVisibility(View.VISIBLE);
-                    progressBarText.setVisibility(View.VISIBLE);
-                    progressBarText.setText("Fetching songs for you...");
                     controllerContainer.setVisibility(View.GONE);
-                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), new String[]{"bollywood"});
+                    progressBarHolder.setVisibility(View.VISIBLE);
+                    progressTextContainer.setVisibility(View.VISIBLE);
+                    progressBarTitle.setText(R.string.fetchingSongs);
+                    progressBarMsg.setText("");
+                    new EmotionControllerService(requestQueue, sharedPreferences).controller(switchCompat.isChecked(), EmotionControllerActivity.this, moodText.getText().toString(), new String[]{"bollywood" });
                 }
             }
         });
     }
 
-    private void initialiseCameraActions(SwitchCompat switchCompat){
+    private void initialiseCameraActions(SwitchCompat switchCompat) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         File file = new File(getFilesDir(), "external_files");
@@ -111,14 +159,6 @@ public class EmotionControllerActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        progressBarHolder.setVisibility(View.GONE);
-        progressBarText.setVisibility(View.GONE);
-        controllerContainer.setVisibility(View.VISIBLE);
-    }
-
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -129,10 +169,11 @@ public class EmotionControllerActivity extends AppCompatActivity {
             inAnimation = new AlphaAnimation(0f, 1f);
             inAnimation.setDuration(200);
             progressBarHolder.setAnimation(inAnimation);
-            progressBarHolder.setVisibility(View.VISIBLE);
-            progressBarText.setVisibility(View.VISIBLE);
-            progressBarText.setText("Detecting mood...");
             controllerContainer.setVisibility(View.GONE);
+            progressBarHolder.setVisibility(View.VISIBLE);
+            System.out.println("make progressBar visible");
+            progressTextContainer.setVisibility(View.VISIBLE);
+            progressBarTitle.setText(R.string.detectingMood);
         }
 
         @Override
@@ -141,14 +182,14 @@ public class EmotionControllerActivity extends AppCompatActivity {
             outAnimation = new AlphaAnimation(1f, 0f);
             outAnimation.setDuration(200);
             progressBarHolder.setAnimation(outAnimation);
-            progressBarText.setText("Fetching content for you...");
+            progressBarTitle.setText(R.string.fetchingSongs);
             cameraLL.setEnabled(true);
             searchButton.setEnabled(true);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            while(!task.isComplete());
+            while (!task.isComplete()) ;
             return null;
         }
     }

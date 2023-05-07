@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +23,8 @@ import com.example.euphoric.services.SpotifyTracksService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
@@ -28,6 +33,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
     SharedPreferences sharedPreferences;
+    TextView name;
+    TextView email;
+    Map<String, Object> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,33 +50,20 @@ public class ProfileActivity extends AppCompatActivity {
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
         myAnim.setInterpolator(interpolator);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert firebaseUser != null;
+        name = findViewById((R.id.user_profile_name));
+        name.setText("Loading...");
 
-        Map<String, Object> user = FirestoreService.get("Users", firebaseUser.getEmail());
-        TextView name = findViewById((R.id.user_profile_name));
-        name.setText(Objects.requireNonNull(user.get("name")).toString());
+        email = findViewById((R.id.user_email));
+        email.setText("Loading...");
 
-        TextView email = findViewById((R.id.user_email));
-        email.setText(Objects.requireNonNull(user.get("email")).toString());
+        new FetchUserDetails().execute();
 
         final TextView likedSongsButton = findViewById(R.id.liked_songs_profile);
         likedSongsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 likedSongsButton.startAnimation(myAnim);
-                Map<String, Object> ob = FirestoreService.get("Users", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                ArrayList<String> songIds = (ArrayList<String>) ob.get("songIds");
-                SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
-                ss.getTracksWithTrackIds(() -> {
-                    ArrayList<SpotifySong> songs = ss.getSongs();
-                    Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
-                    i.putExtra("SongList", songs);
-                    i.putExtra("caller_type", "Profile");
-                    i.putExtra("contains_songs", songs.size() > 0);
-                    i.putExtra("error_msg", getResources().getString(R.string.no_liked_songs));
-                    startActivity(i);
-                }, songIds);
+                new GoToLikedSongs().execute();
             }
         });
 
@@ -90,5 +85,56 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
+    }
+
+    private class FetchUserDetails extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            name.setText(Objects.requireNonNull(user.get("name")).toString());
+            email.setText(Objects.requireNonNull(user.get("email")).toString());
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert firebaseUser != null;
+            user = FirestoreService.get("Users", firebaseUser.getEmail());
+            return null;
+        }
+    }
+
+    private class GoToLikedSongs extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ArrayList<String> songIds = (ArrayList<String>) user.get("songIds");
+            SpotifyTracksService ss = new SpotifyTracksService(requestQueue, sharedPreferences);
+            ss.getTracksWithTrackIds(() -> {
+                ArrayList<SpotifySong> songs = ss.getSongs();
+                Intent i = new Intent(getApplicationContext(), LikedSongsActivity.class);
+                i.putExtra("SongList", songs);
+                i.putExtra("caller_type", "Profile");
+                i.putExtra("contains_songs", songs.size() > 0);
+                i.putExtra("error_msg", getResources().getString(R.string.no_liked_songs));
+                startActivity(i);
+            }, songIds);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while(user==null);
+            return null;
+        }
     }
 }

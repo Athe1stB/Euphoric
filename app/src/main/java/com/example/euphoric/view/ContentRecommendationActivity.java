@@ -51,7 +51,5 @@ public class ContentRecommendationActivity extends AppCompatActivity {
                 tv.setText(getResources().getString(R.string.no_recommendation));
             }
         }, songIds);
-
-
     }
 }

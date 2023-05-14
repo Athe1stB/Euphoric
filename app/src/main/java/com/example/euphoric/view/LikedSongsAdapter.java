@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,12 +34,15 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
     String callerType;
     ArrayList<String> getNewSongs = new ArrayList<>();
+    ArrayList<Boolean> likedStatus = new ArrayList<>();
 
     public LikedSongsAdapter(Activity context, ArrayList<SpotifySong> word, String callerType) {
         super(context, 0, word);
         this.callerType = callerType;
         getNewSongs.add("search");
         getNewSongs.add("recommendations");
+        for (int i = 0; i < word.size(); i++)
+            likedStatus.add((!getNewSongs.contains(callerType)));
     }
 
     @NonNull
@@ -76,38 +80,44 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         TextView artistText = view.findViewById(R.id.song_artist);
         artistText.setText(artist);
 
-        TextView albumText = view.findViewById(R.id.song_album);
-        albumText.setText("Album: " + album);
-
-        TextView durationText = view.findViewById(R.id.song_duration);
-        durationText.setText("Duration: " + durationStr);
-
+        ImageButton playButton = view.findViewById(R.id.song_play);
+        ImageButton likeButton = view.findViewById(R.id.song_like);
+        ImageButton moreButton = view.findViewById(R.id.song_details);
         ImageView thumbnailImg = view.findViewById(R.id.song_thumbnail);
         Picasso.get().load(thumbnail).into(thumbnailImg);
 
-        Button likeButton = view.findViewById(R.id.song_like_dislike);
-        if (!getNewSongs.contains(callerType))
-            likeButton.setText("Dislike");
+        if (likedStatus.get(position))
+            likeButton.setImageResource(R.drawable.like_filled);
         else
-            likeButton.setText("Like");
+            likeButton.setImageResource(R.drawable.like_border);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 likeButton.startAnimation(myAnim);
-                if (!getNewSongs.contains(callerType))
-                    new DeleteSong(id, cur).execute();
-                else
+                if (likedStatus.get(position)) {
+                    likeButton.setImageResource(R.drawable.like_border);
+                        new DeleteSong(id, cur, !getNewSongs.contains(callerType)).execute();
+                } else {
+                    likeButton.setImageResource(R.drawable.like_filled);
                     new AddSong(id).execute();
+                }
+                likedStatus.set(position, !(likedStatus.get(position)));
             }
         });
 
-        Button playButton = view.findViewById(R.id.song_play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playButton.startAnimation(myAnim);
                 applicationContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+            }
+        });
+
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moreButton.startAnimation(myAnim);
             }
         });
 
@@ -143,11 +153,13 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
     private class DeleteSong extends AsyncTask<Void, Void, Void> {
         private final String id;
         private final SpotifySong cur;
+        private final boolean deleteFromView;
 
-        public DeleteSong(String id, SpotifySong cur) {
+        public DeleteSong(String id, SpotifySong cur, boolean deleteFromView) {
             super();
             this.id = id;
             this.cur = cur;
+            this.deleteFromView = deleteFromView;
         }
 
         @Override
@@ -158,8 +170,10 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            remove(cur);
-            notifyDataSetChanged();
+            if(deleteFromView) {
+                remove(cur);
+                notifyDataSetChanged();
+            }
         }
 
         @Override

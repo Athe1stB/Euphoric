@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -74,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     List<String> songIds = Collections.emptyList();
-                                    User user = new User(new Date(),"", name.getText().toString().trim(), songIds);
+                                    User user = new User("01/01/1970", phone.getText().toString(), name.getText().toString().trim(), songIds);
                                     FirestoreService.set(user, "Users", email.getText().toString().trim());
                                     startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                     Log.d(TAG, "successfully created user");

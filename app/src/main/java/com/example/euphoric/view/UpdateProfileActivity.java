@@ -71,7 +71,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, Object> updatedData = new HashMap<String, Object>(){{
+                Map<String, Object> updatedData = new HashMap<String, Object>() {{
                     put("name", name.getText().toString());
                     put("dob", dob.getText().toString());
                     put("phone", phone.getText().toString());

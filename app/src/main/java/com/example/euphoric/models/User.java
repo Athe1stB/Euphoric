@@ -20,10 +20,10 @@ public class User {
     private List<String> songIds;
     private String userId;
     private String email;
-    private Date dob;
+    private String dob;
     private String phone;
 
-    public User(Date dob, String phone, String name, List<String> songIds) {
+    public User(String dob, String phone, String name, List<String> songIds) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.dob = dob;
         this.name = name;
@@ -66,11 +66,11 @@ public class User {
         this.songIds = songIds;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

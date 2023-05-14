@@ -4,6 +4,7 @@ import static java.util.Calendar.DATE;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,14 +17,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.euphoric.MainActivity;
 import com.example.euphoric.R;
 import com.example.euphoric.models.SpotifySong;
 import com.example.euphoric.services.FirestoreService;
 import com.example.euphoric.services.MyBounceInterpolator;
 import com.example.euphoric.services.SpotifyTracksService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -88,6 +93,19 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteAccount.startAnimation(myAnim);
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                FirestoreService.delete("Users", firebaseUser.getEmail());
+                firebaseUser.delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 

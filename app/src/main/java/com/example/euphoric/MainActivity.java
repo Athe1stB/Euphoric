@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             SpotifyUser user = userService.getUser();
             editor = getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE).edit();
             editor.putString("userid", user.id);
-            // We use commit instead of apply because we need the information stored immediately
+            editor.putString("imageUriSpotify", (String)user.images.get(0).get("url"));
             editor.commit();
         });
     }

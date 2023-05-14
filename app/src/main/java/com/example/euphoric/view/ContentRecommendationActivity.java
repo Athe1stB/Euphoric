@@ -61,11 +61,16 @@ public class ContentRecommendationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            outAnimation = new AlphaAnimation(1f, 0f);
-            outAnimation.setDuration(200);
-            progressBarHolder.setAnimation(outAnimation);
-            progressBarMsg.setVisibility(View.GONE);
-            progressBarHolder.setVisibility(View.GONE);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    outAnimation = new AlphaAnimation(1f, 0f);
+                    outAnimation.setDuration(200);
+                    progressBarHolder.setAnimation(outAnimation);
+                    progressBarMsg.setVisibility(View.GONE);
+                    progressBarHolder.setVisibility(View.GONE);
+                }
+            });
         }
 
         @Override
@@ -77,14 +82,24 @@ public class ContentRecommendationActivity extends AppCompatActivity {
             ss.getRecommendations(() -> {
                 ArrayList<SpotifySong> songs = ss.getSongs();
                 if (songs.size() > 0) {
-                    setContentView(R.layout.basic_list);
-                    ListView listView = (ListView) findViewById(R.id.basic_list);
-                    final LikedSongsAdapter cAdapter = new LikedSongsAdapter(activity, songs, "recommendations");
-                    listView.setAdapter(cAdapter);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setContentView(R.layout.basic_list);
+                            ListView listView = (ListView) findViewById(R.id.basic_list);
+                            final LikedSongsAdapter cAdapter = new LikedSongsAdapter(activity, songs, "recommendations");
+                            listView.setAdapter(cAdapter);
+                        }
+                    });
                 } else {
-                    setContentView(R.layout.no_tracks);
-                    TextView tv = findViewById(R.id.track_error_msg);
-                    tv.setText(getResources().getString(R.string.no_recommendation));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setContentView(R.layout.no_tracks);
+                            TextView tv = findViewById(R.id.track_error_msg);
+                            tv.setText(getResources().getString(R.string.no_recommendation));
+                        }
+                    });
                 }
             }, songIds);
             return null;

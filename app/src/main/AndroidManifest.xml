@@ -29,6 +29,9 @@
         android:theme="@style/Theme.Euphoric.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".view.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ResetPasswordActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,9 @@
 package com.example.euphoric.view;
 
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -25,7 +29,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,7 +44,10 @@ public class ProfileActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     TextView name;
     TextView email;
+    TextView phone;
+    TextView dob;
     Map<String, Object> user;
+    AsyncTask fetchUserDetailsTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +68,11 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById((R.id.user_email));
         email.setText("Loading...");
 
-        new FetchUserDetails().execute();
+        phone = findViewById((R.id.user_phone));
+        phone.setText("Loading...");
+
+        dob = findViewById((R.id.user_dob));
+        dob.setText("Loading...");
 
         final TextView likedSongsButton = findViewById(R.id.liked_songs_profile);
         likedSongsButton.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +83,28 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        final TextView deleteAccount = findViewById(R.id.delete_account);
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAccount.startAnimation(myAnim);
+            }
+        });
+
+        final TextView updatePassword = findViewById(R.id.update_password);
+        updatePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePassword.startAnimation(myAnim);
+            }
+        });
+
         final TextView updateProfileButton = findViewById(R.id.update_profile);
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateProfileButton.startAnimation(myAnim);
-//                startActivity(new Intent(getApplicationContext(), LikedSongsActivity.class));
+                new NavigateToUpdateProfile().execute();
             }
         });
 
@@ -87,6 +119,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchUserDetailsTask = new FetchUserDetails().execute();
+    }
+
     private class FetchUserDetails extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -98,6 +136,18 @@ public class ProfileActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             name.setText(Objects.requireNonNull(user.get("name")).toString());
             email.setText(Objects.requireNonNull(user.get("email")).toString());
+            phone.setText(Objects.requireNonNull(user.get("phone")).toString());
+            try {
+                dob.setText(
+                        getDiffYears(
+                                new SimpleDateFormat("dd/MM/yyyy").parse((String) user.get("dob")),
+                                new Date()
+                        )
+                        + " yrs"
+                );
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -133,8 +183,50 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            while(user==null);
+            while (user == null) ;
             return null;
         }
     }
+
+    private class NavigateToUpdateProfile extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent i = new Intent(getApplicationContext(), UpdateProfileActivity.class);
+            i.putExtra("email", (String) (user.get("email")));
+            i.putExtra("name", (String) (user.get("name")));
+            i.putExtra("phone", (String) (user.get("phone")));
+            i.putExtra("dob", (String) (user.get("dob")));
+            startActivity(i);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (!fetchUserDetailsTask.getStatus().equals(Status.FINISHED)) ;
+            return null;
+        }
+    }
+
+    private static int getDiffYears(Date first, Date last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(YEAR) - a.get(YEAR);
+        if (a.get(MONTH) > b.get(MONTH) ||
+                (a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
+            diff--;
+        }
+        return diff;
+    }
+
+    private static Calendar getCalendar(Date date) {
+        Calendar cal = Calendar.getInstance(Locale.US);
+        cal.setTime(date);
+        return cal;
+    }
+
 }

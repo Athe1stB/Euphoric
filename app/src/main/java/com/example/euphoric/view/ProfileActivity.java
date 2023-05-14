@@ -114,6 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updatePassword.startAnimation(myAnim);
+                startActivity(new Intent(getApplicationContext(), UpdatePasswordActivity.class));
             }
         });
 

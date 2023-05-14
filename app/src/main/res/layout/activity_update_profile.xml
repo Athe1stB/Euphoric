@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/phone"
+        android:drawableStart="@drawable/phone"
         android:drawablePadding="8dp"
         android:fontFamily="@font/arvo"
         android:gravity="center_vertical"
@@ -93,15 +93,17 @@
         android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dob"
+        android:id="@+id/up_dob"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
+        android:drawableStart="@drawable/calender"
         android:drawablePadding="8dp"
         android:fontFamily="@font/arvo"
         android:gravity="center_vertical"
-        android:hint="Date of birth"
+        android:hint="Date of Birth"
+        android:inputType="none"
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"

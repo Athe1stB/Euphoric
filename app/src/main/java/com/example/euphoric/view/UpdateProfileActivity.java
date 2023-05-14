@@ -35,7 +35,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         TextView email = findViewById(R.id.up_emailId);
         TextView name = findViewById(R.id.up_fullName);
         TextView phone = findViewById(R.id.up_phone);
-        AppCompatEditText dob = findViewById(R.id.dob);
+        AppCompatEditText dob = findViewById(R.id.up_dob);
         Button submit = findViewById(R.id.up_update);
 
         Intent i = getIntent();

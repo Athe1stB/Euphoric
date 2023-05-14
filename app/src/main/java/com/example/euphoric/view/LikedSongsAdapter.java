@@ -37,12 +37,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
     String callerType;
     ArrayList<String> getNewSongs = new ArrayList<>();
-    ArrayList<Boolean> likedStatus = new ArrayList<>();
+    HashMap<String, Boolean> likedStatus = new HashMap<>();
 
     public LikedSongsAdapter(Activity context, ArrayList<SpotifySong> word, String callerType) {
         super(context, 0, word);
@@ -50,7 +51,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         getNewSongs.add("search");
         getNewSongs.add("recommendations");
         for (int i = 0; i < word.size(); i++)
-            likedStatus.add((!getNewSongs.contains(callerType)));
+            likedStatus.put(word.get(i).getId(), !getNewSongs.contains(callerType));
     }
 
     @NonNull
@@ -94,7 +95,7 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         ImageView thumbnailImg = view.findViewById(R.id.song_thumbnail);
         Picasso.get().load(thumbnail).into(thumbnailImg);
 
-        if (likedStatus.get(position))
+        if (likedStatus.get(id))
             likeButton.setImageResource(R.drawable.like_filled);
         else
             likeButton.setImageResource(R.drawable.like_border);
@@ -103,14 +104,14 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
             @Override
             public void onClick(View v) {
                 likeButton.startAnimation(myAnim);
-                if (likedStatus.get(position)) {
+                if (likedStatus.get(id)) {
                     likeButton.setImageResource(R.drawable.like_border);
                     new DeleteSong(id, cur, !getNewSongs.contains(callerType)).execute();
                 } else {
                     likeButton.setImageResource(R.drawable.like_filled);
                     new AddSong(id).execute();
                 }
-                likedStatus.set(position, !(likedStatus.get(position)));
+                likedStatus.put(id, !(likedStatus.get(id)));
             }
         });
 

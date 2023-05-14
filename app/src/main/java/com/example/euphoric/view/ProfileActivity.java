@@ -93,19 +93,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteAccount.startAnimation(myAnim);
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                FirestoreService.delete("Users", firebaseUser.getEmail());
-                firebaseUser.delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "User deleted", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Intent i = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
+                i.putExtra("operation", "delete account");
+                startActivity(i);
             }
         });
 
@@ -114,7 +104,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updatePassword.startAnimation(myAnim);
-                startActivity(new Intent(getApplicationContext(), UpdatePasswordActivity.class));
+                Intent i = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
+                i.putExtra("operation", "update password");
+                startActivity(i);
             }
         });
 

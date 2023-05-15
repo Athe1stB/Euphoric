@@ -257,10 +257,12 @@ public class ProfileActivity extends AppCompatActivity {
                     String imageUrl = sharedPreferences.getString("imageUriSpotify", "");
                     ImageButton profileImage = findViewById(R.id.user_profile_photo);
                     try {
-                        URL url = new URL(imageUrl);
-                        Bitmap bm = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        Bitmap conv_bm = getRoundedBitmap(bm);
-                        profileImage.setImageBitmap(conv_bm);
+                        if(!imageUrl.equals("")) {
+                            URL url = new URL(imageUrl);
+                            Bitmap bm = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            Bitmap conv_bm = getRoundedBitmap(bm);
+                            profileImage.setImageBitmap(conv_bm);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

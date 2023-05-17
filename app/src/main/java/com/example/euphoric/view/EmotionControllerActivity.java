@@ -156,6 +156,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                     public void onActivityResult(Boolean result) {
                         if (result) {
                             CameraService cs = new CameraService(EmotionControllerActivity.this, requestQueue, sharedPreferences);
+                            System.out.println("Language " + language.getText() );
                             task = cs.persistImageAndCallApi(uri, switchCompat.isChecked(), language.getText().toString());
                             new MyTask().execute();
                         } else {

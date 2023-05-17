@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class EmotionApiService {
-    private final String ENDPOINT = "https://ec5c-117-194-126-141.ngrok-free.app/recommend1";
+    private final String ENDPOINT = "https://0bbb-103-167-172-65.ngrok-free.app/recommend1";
 
     public String getMood(String urlImage) throws IOException {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");

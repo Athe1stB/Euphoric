@@ -21,6 +21,7 @@ public class VideoActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.basic_list);
         final VideoAdapter cAdapter = new VideoAdapter(this, model);
+        listView.setDivider(null);
         listView.setAdapter(cAdapter);
     }
 }

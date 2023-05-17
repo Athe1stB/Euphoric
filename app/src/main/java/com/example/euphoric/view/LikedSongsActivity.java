@@ -29,6 +29,7 @@ public class LikedSongsActivity extends AppCompatActivity {
             setContentView(R.layout.basic_list);
             ListView listView = (ListView) findViewById(R.id.basic_list);
             final LikedSongsAdapter cAdapter = new LikedSongsAdapter(this, songs, callerType);
+            listView.setDivider(null);
             listView.setAdapter(cAdapter);
         } else {
             setContentView(R.layout.no_tracks);

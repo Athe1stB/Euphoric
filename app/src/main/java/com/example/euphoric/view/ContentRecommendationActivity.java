@@ -88,6 +88,7 @@ public class ContentRecommendationActivity extends AppCompatActivity {
                             setContentView(R.layout.basic_list);
                             ListView listView = (ListView) findViewById(R.id.basic_list);
                             final LikedSongsAdapter cAdapter = new LikedSongsAdapter(activity, songs, "recommendations");
+                            listView.setDivider(null);
                             listView.setAdapter(cAdapter);
                         }
                     });

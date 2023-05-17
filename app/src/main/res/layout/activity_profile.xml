@@ -24,7 +24,6 @@
             android:layout_marginTop="-60dp"
             android:background="@drawable/profile_circle_img"
             android:elevation="5dp"
-            android:padding="20dp"
             android:scaleType="centerCrop"/>
 
         <RelativeLayout
@@ -54,10 +53,32 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_profile_name"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:text="your@email.com"
                 android:textColor="#fff"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/user_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_email"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="1234567890"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/user_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_phone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="0 yrs"
+                android:textColor="#fff"
+                android:textSize="12sp" />
         </RelativeLayout>
 
 
@@ -69,19 +90,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/white_card"
-                android:textColor="@color/purple_700"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:text="Favourite Genres:\n1. Pop\n2. Old school\n3. Jazz\n4. Romance" />
-
-            <TextView
                 android:id="@+id/liked_songs_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,8 +98,26 @@
                 android:textColor="@color/purple_700"
                 android:clickable="true"
                 android:elevation="4dp"
+                android:fontFamily="@font/literate"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:padding="20dp"
                 android:text="Liked Songs" />
+
+            <TextView
+                android:id="@+id/update_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/list_card"
+                android:textColor="@color/purple_700"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:fontFamily="@font/literate"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="20dp"
+                android:text="Update Password" />
 
 
             <TextView
@@ -103,6 +129,9 @@
                 android:textColor="@color/purple_700"
                 android:clickable="true"
                 android:elevation="4dp"
+                android:fontFamily="@font/literate"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:padding="20dp"
                 android:text="Update Profile" />
 
@@ -117,8 +146,26 @@
                 android:textColor="@color/purple_700"
                 android:clickable="true"
                 android:elevation="4dp"
+                android:fontFamily="@font/literate"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:padding="20dp"
                 android:text="Signout" />
+
+            <TextView
+                android:id="@+id/delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/list_card"
+                android:textColor="@color/purple_700"
+                android:fontFamily="@font/literate"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Delete Account" />
 
         </LinearLayout>
     </RelativeLayout>

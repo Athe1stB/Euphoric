@@ -1,19 +1,28 @@
 package com.example.euphoric.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,17 +37,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
 
     String callerType;
     ArrayList<String> getNewSongs = new ArrayList<>();
+    HashMap<String, Boolean> likedStatus = new HashMap<>();
 
     public LikedSongsAdapter(Activity context, ArrayList<SpotifySong> word, String callerType) {
         super(context, 0, word);
         this.callerType = callerType;
         getNewSongs.add("search");
         getNewSongs.add("recommendations");
+        for (int i = 0; i < word.size(); i++)
+            likedStatus.put(word.get(i).getId(), !getNewSongs.contains(callerType));
     }
 
     @NonNull
@@ -76,33 +89,32 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         TextView artistText = view.findViewById(R.id.song_artist);
         artistText.setText(artist);
 
-        TextView albumText = view.findViewById(R.id.song_album);
-        albumText.setText("Album: " + album);
-
-        TextView durationText = view.findViewById(R.id.song_duration);
-        durationText.setText("Duration: " + durationStr);
-
+        ImageButton playButton = view.findViewById(R.id.song_play);
+        ImageButton likeButton = view.findViewById(R.id.song_like);
+        ImageButton moreButton = view.findViewById(R.id.song_details);
         ImageView thumbnailImg = view.findViewById(R.id.song_thumbnail);
         Picasso.get().load(thumbnail).into(thumbnailImg);
 
-        Button likeButton = view.findViewById(R.id.song_like_dislike);
-        if (!getNewSongs.contains(callerType))
-            likeButton.setText("Dislike");
+        if (likedStatus.get(id))
+            likeButton.setImageResource(R.drawable.like_filled);
         else
-            likeButton.setText("Like");
+            likeButton.setImageResource(R.drawable.like_border);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 likeButton.startAnimation(myAnim);
-                if (!getNewSongs.contains(callerType))
-                    new DeleteSong(id, cur).execute();
-                else
+                if (likedStatus.get(id)) {
+                    likeButton.setImageResource(R.drawable.like_border);
+                    new DeleteSong(id, cur, !getNewSongs.contains(callerType)).execute();
+                } else {
+                    likeButton.setImageResource(R.drawable.like_filled);
                     new AddSong(id).execute();
+                }
+                likedStatus.put(id, !(likedStatus.get(id)));
             }
         });
 
-        Button playButton = view.findViewById(R.id.song_play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +122,15 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
                 applicationContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
             }
         });
+
+        handleSpinnerDropdown(
+                moreButton,
+                applicationContext,
+                name,
+                album,
+                durationStr,
+                artist,
+                thumbnail);
 
         return view;
     }
@@ -143,11 +164,13 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
     private class DeleteSong extends AsyncTask<Void, Void, Void> {
         private final String id;
         private final SpotifySong cur;
+        private final boolean deleteFromView;
 
-        public DeleteSong(String id, SpotifySong cur) {
+        public DeleteSong(String id, SpotifySong cur, boolean deleteFromView) {
             super();
             this.id = id;
             this.cur = cur;
+            this.deleteFromView = deleteFromView;
         }
 
         @Override
@@ -158,8 +181,10 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            remove(cur);
-            notifyDataSetChanged();
+            if (deleteFromView) {
+                remove(cur);
+                notifyDataSetChanged();
+            }
         }
 
         @Override
@@ -168,4 +193,44 @@ public class LikedSongsAdapter extends ArrayAdapter<SpotifySong> {
             return null;
         }
     }
+
+
+    private void handleSpinnerDropdown(
+            ImageButton moreButton,
+            Context applicationContext,
+            String name,
+            String album,
+            String duration,
+            String artist,
+            String thumbnailUri
+            ) {
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(applicationContext);
+                dialog.setContentView(R.layout.song_details);
+                dialog.getWindow().setLayout(1000, 900);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                TextView nameText = dialog.findViewById(R.id.song_name);
+                nameText.setText(name);
+
+                TextView artistText = dialog.findViewById(R.id.song_artist);
+                artistText.setText(artist);
+
+                TextView durationText = dialog.findViewById(R.id.song_duration);
+                durationText.setText(duration);
+
+                TextView albumText = dialog.findViewById(R.id.song_album);
+                albumText.setText(album);
+
+                ImageView thumbnail = dialog.findViewById(R.id.song_thumbnail);
+                Picasso.get().load(thumbnailUri).into(thumbnail);
+
+            }
+        });
+
+    }
+
 }

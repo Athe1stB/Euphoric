@@ -137,6 +137,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signOutButton.startAnimation(myAnim);
                 FirebaseAuth.getInstance().signOut();
+                finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });

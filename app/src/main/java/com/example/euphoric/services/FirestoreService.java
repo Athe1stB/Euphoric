@@ -3,7 +3,9 @@ package com.example.euphoric.services;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -79,21 +81,28 @@ public class FirestoreService {
         return ds.getResult().getData();
     }
 
-    public static void update(Map<String, Object> data, String collectionPath, String documentName) {
-        db.collection(collectionPath).document(documentName)
+    public static boolean update(Map<String, Object> data, String collectionPath, String documentName, Context context) {
+        final boolean[] profileUpdated = {false};
+        Task<Void> updateTask = db.collection(collectionPath).document(documentName)
                 .update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Toast.makeText(context, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        profileUpdated[0] = true;
+                        System.out.println("updated");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
+                        Toast.makeText(context, "Failed to update profile!", Toast.LENGTH_SHORT).show();
+                        profileUpdated[0] = false;
                     }
                 });
+
+        while(!updateTask.isComplete());
+        return profileUpdated[0];
     }
 
     public static void addArrayElement(String collectionPath, String documentName, String arrayName, String element) {

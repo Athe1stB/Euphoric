@@ -97,5 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forgotPassword.startAnimation(myAnim);
+                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+            }
+        });
     }
 }

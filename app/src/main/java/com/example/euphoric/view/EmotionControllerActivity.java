@@ -185,7 +185,7 @@ public class EmotionControllerActivity extends AppCompatActivity {
                 ListView listView = dialog.findViewById(R.id.list_view);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(EmotionControllerActivity.this
-                        , android.R.layout.simple_list_item_1, arrayList);
+                        , R.layout.text_spinner, arrayList);
 
                 listView.setAdapter(adapter);
 

@@ -10,18 +10,12 @@
     android:padding="20dp">
 
 
-    <TextView
+    <ImageView
+        android:id="@+id/up_logo"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/arvo"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Update Profile"
-        android:textColor="@color/lavender"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/homescreen_logo_only" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/up_fullName"

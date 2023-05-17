@@ -263,6 +263,11 @@ public class ProfileActivity extends AppCompatActivity {
                             Bitmap conv_bm = getRoundedBitmap(bm);
                             profileImage.setImageBitmap(conv_bm);
                         }
+                        else{
+                            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.homescreen_logo_only);
+                            Bitmap conv_bm = getRoundedBitmap(bm);
+                            profileImage.setImageBitmap(conv_bm);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
